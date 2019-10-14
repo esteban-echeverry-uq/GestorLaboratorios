@@ -1,14 +1,42 @@
-import React,{ Component } from 'react';
-import { View, Text } from 'react-native';
+import React, { Component } from 'react';
+import { FlatList, SafeAreaView, StyleSheet } from 'react-native';
+import ListItem from '../../components/ListItem'
 
-class reactTutorialApp extends Component {
+class Index extends Component {
+    
     render(){
+        const DATA = [
+            {
+              id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+              title: 'First Item',
+            },
+            {
+              id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+              title: 'Second Item',
+            },
+            {
+              id: '58694a0f-3da1-471f-bd96-145571e29d72',
+              title: 'Third Item',
+            },
+        ];
+
         return(
-            <View>
-                <Text>Hi</Text>
-            </View>
+            <SafeAreaView style={styles.container}>
+                <FlatList
+                    data={DATA}
+                    renderItem={({ item }) => <ListItem title={item.title} />}
+                    keyExtractor={item => item.id}
+                />
+            </SafeAreaView>
         );
     } 
 }
 
-export default reactTutorialApp
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        marginTop: 10,
+    },
+});
+
+export default Index
