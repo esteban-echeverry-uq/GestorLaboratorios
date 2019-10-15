@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { FlatList, SafeAreaView, StyleSheet } from 'react-native';
 import ListItem from '../../components/ListItem';
 import axios from 'axios';
+const endpoints = require('../../configs/constants/endpoints');
+const endpointGenerator = require('../../helpers/endpointGenerator');
+//import endpoints from '../../configs/constants/endpoints';
+//import endpointGenerator from '../../helpers/endpointGenerator'
 
 class Index extends Component {
     
@@ -13,7 +17,12 @@ class Index extends Component {
     }
 
     componentDidMount(){
-        axios.get('https://gestor-laboratorios.herokuapp.com/api/spaces')
+        const ENDPOINT = endpoints.SPACE.GET_ALL;
+        const url = endpointGenerator(ENDPOINT);
+        axios({
+            method: ENDPOINT.METHOD,
+            url: url
+        })
         .then((response) =>{
             this.setState({
                 spaces: response.data.spaces
@@ -26,6 +35,7 @@ class Index extends Component {
 
     render(){
         let {spaces} = this.state;
+
         return(
             spaces.length > 0 &&
             <SafeAreaView style={styles.container}>
