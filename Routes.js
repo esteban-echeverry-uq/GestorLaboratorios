@@ -1,15 +1,19 @@
 import React from 'react'
 import { Router, Scene } from 'react-native-router-flux'
 import Spaces from './views/Space/index'
-import showSpace from './views/Space/show'
+import ShowSpace from './views/Space/show'
+import Login from './views/Auth/Login'
+import SignUp from './views/Auth/SignUp'
 
 const Routes = () => (
-   <Router>
-        <Scene key="root">
-            <Scene key="spacesIndex" component={Spaces} title="Spaces" initial={true} />
-            <Scene key="showSpace" component={showSpace} title />
+    <Router>
+        <Scene key="root" style>
+            <Scene key="login" component={Login} title="Iniciar Sesión" initial={true} />
+            <Scene key="signUp" component={SignUp} title="Crear Cuenta" />
+            <Scene key="spacesIndex" component={Spaces} title="Facultades" />
+            <Scene key="showSpace" component={ShowSpace} title />
         </Scene>
-   </Router>
+    </Router>
 )
 
 export default Routes

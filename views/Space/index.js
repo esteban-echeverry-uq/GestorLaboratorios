@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { FlatList, SafeAreaView, StyleSheet } from 'react-native';
+import { FlatList, View, StyleSheet } from 'react-native';
 import ListItem from '../../components/ListItem';
 import axios from 'axios';
 const endpoints = require('../../configs/constants/endpoints');
 const endpointGenerator = require('../../helpers/endpointGenerator');
-//import endpoints from '../../configs/constants/endpoints';
-//import endpointGenerator from '../../helpers/endpointGenerator'
 
 class Index extends Component {
     
@@ -38,13 +36,13 @@ class Index extends Component {
 
         return(
             spaces.length > 0 &&
-            <SafeAreaView style={styles.container}>
+            <View style={styles.container}>
                 <FlatList
                     data={spaces}
                     renderItem={({ item }) => <ListItem title={item.name} />}
                     keyExtractor={item => item._id}
                 />
-            </SafeAreaView>
+            </View>
         );
     } 
 }
@@ -53,7 +51,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         marginTop: 10,
-    },
+    }
 });
 
 export default Index
