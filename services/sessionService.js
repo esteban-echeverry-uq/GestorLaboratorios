@@ -27,7 +27,6 @@ module.exports = class SessionService {
 		try {
 			const { data } = await ServerAction(USER_ENDPOINTS.LOGIN, {}, options);
 
-
 			if (data.status === 'success') {
 				const { user } = data;
 				await StoreAction.set('currentUser', user);

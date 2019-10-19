@@ -1,4 +1,4 @@
-const domainURL = 'https://gestor-laboratorios.herokuapp.com';
+const domainURL = 'https://gestor-laboratorios-uq.herokuapp.com';
 
 module.exports = (PATH, URLParams) => {
 	const path = eval(PATH);
