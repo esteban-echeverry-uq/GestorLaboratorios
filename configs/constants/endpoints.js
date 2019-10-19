@@ -8,15 +8,15 @@ module.exports = {
 			METHOD: httpMethods.POST
 		},
 		DELETE: {
-			PATH: '`api/users/${options.userID}`',
+			PATH: '`api/users/${URLParams.userID}`',
 			METHOD: httpMethods.DELETE
 		},
-		EDIT: {
-			PATH: '`api/users/${options.userID}`',
+		UPDATE: {
+			PATH: '`api/users/${URLParams.userID}`',
 			METHOD: httpMethods.PUT
 		},
 		GET_BY_ID: {
-			PATH: '`api/users/${options.userID}`',
+			PATH: '`api/users/${URLParams.userID}`',
 			METHOD: httpMethods.GET
 		},
 		GET_ALL: {
@@ -38,15 +38,15 @@ module.exports = {
 			METHOD: httpMethods.POST
 		},
 		DELETE: {
-			PATH: '`api/spaces/${options.spaceID}`',
+			PATH: '`api/spaces/${URLParams.spaceID}`',
 			METHOD: httpMethods.DELETE
 		},
-		EDIT: {
-			PATH: '`api/spaces/${options.spaceID}`',
+		UPDATE: {
+			PATH: '`api/spaces/${URLParams.spaceID}`',
 			METHOD: httpMethods.PUT
 		},
 		GET_BY_ID: {
-			PATH: '`api/spaces/${options.spaceID}`',
+			PATH: '`api/spaces/${URLParams.spaceID}`',
 			METHOD: httpMethods.GET
 		},
 		GET_ALL: {
@@ -56,45 +56,45 @@ module.exports = {
 	},
 	ROOM: {
 		CREATE: {
-			PATH: '`api/spaces/${options.spaceID}/rooms`',
+			PATH: '`api/spaces/${URLParams.spaceID}/rooms`',
 			METHOD: httpMethods.POST
 		},
 		DELETE: {
-			PATH: '`api/spaces/${options.spaceID}/rooms/${options.roomID}`',
+			PATH: '`api/spaces/${URLParams.spaceID}/rooms/${URLParams.roomID}`',
 			METHOD: httpMethods.DELETE
 		},
-		EDIT: {
-			PATH: '`api/spaces/${options.spaceID}/rooms/${options.roomID}`',
+		UPDATE: {
+			PATH: '`api/spaces/${URLParams.spaceID}/rooms/${URLParams.roomID}`',
 			METHOD: httpMethods.PUT
 		},
 		GET_BY_ID: {
-			PATH: '`api/spaces/${options.spaceID}/rooms/${options.roomID}`',
+			PATH: '`api/spaces/${URLParams.spaceID}/rooms/${URLParams.roomID}`',
 			METHOD: httpMethods.GET
 		},
 		GET_ALL: {
-			PATH: '`api/spaces/${options.spaceID}/rooms`',
+			PATH: '`api/spaces/${URLParams.spaceID}/rooms`',
 			METHOD: httpMethods.GET
 		},
 	},
 	TOOL: {
 		CREATE: {
-			PATH: '`api/spaces/${options.spaceID}/tools`',
+			PATH: '`api/spaces/${URLParams.spaceID}/tools`',
 			METHOD: httpMethods.POST
 		},
 		DELETE: {
-			PATH: '`api/spaces/${options.spaceID}/tools/${options.toolID}`',
+			PATH: '`api/spaces/${URLParams.spaceID}/tools/${URLParams.toolID}`',
 			METHOD: httpMethods.DELETE
 		},
-		EDIT: {
-			PATH: '`api/spaces/${options.spaceID}/tools/${options.toolID}`',
+		UPDATE: {
+			PATH: '`api/spaces/${URLParams.spaceID}/tools/${URLParams.toolID}`',
 			METHOD: httpMethods.PUT
 		},
 		GET_BY_ID: {
-			PATH: '`api/spaces/${options.spaceID}/tools/${options.toolID}`',
+			PATH: '`api/spaces/${URLParams.spaceID}/tools/${URLParams.toolID}`',
 			METHOD: httpMethods.GET
 		},
 		GET_ALL: {
-			PATH: '`api/spaces/${options.spaceID}/tools`',
+			PATH: '`api/spaces/${URLParams.spaceID}/tools`',
 			METHOD: httpMethods.GET
 		},
 	},
@@ -104,27 +104,27 @@ module.exports = {
 			METHOD: httpMethods.GET
 		},
 		CREATE: {
-			PATH: '`api/elements/${options.elementID}/reservations`',
+			PATH: '`api/elements/${URLParams.elementID}/reservations`',
 			METHOD: httpMethods.POST
 		},
 		DELETE: {
-			PATH: '`api/elements/${options.elementID}/reservations/${options.reservationID}`',
+			PATH: '`api/elements/${URLParams.elementID}/reservations/${URLParams.reservationID}`',
 			METHOD: httpMethods.DELETE
 		},
-		EDIT: {
-			PATH: '`api/elements/${options.elementID}/reservations/${options.reservationID}`',
+		UPDATE: {
+			PATH: '`api/elements/${URLParams.elementID}/reservations/${URLParams.reservationID}`',
 			METHOD: httpMethods.PUT
 		},
 		GET_BY_ID: {
-			PATH: '`api/elements/${options.elementID}/reservations/${options.reservationID}`',
+			PATH: '`api/elements/${URLParams.elementID}/reservations/${URLParams.reservationID}`',
 			METHOD: httpMethods.GET
 		},
 		GET_ALL_BY_ELEMENT: {
-			PATH: '`api/elements/${options.elementID}/reservations`',
+			PATH: '`api/elements/${URLParams.elementID}/reservations`',
 			METHOD: httpMethods.GET
 		},
 		GET_ALL_BY_USER: {
-			PATH: '`api/users/${options.userID}/reservations`',
+			PATH: '`api/users/${URLParams.userID}/reservations`',
 			METHOD: httpMethods.GET
 		}
 	}
