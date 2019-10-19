@@ -33,7 +33,7 @@ class SignUp extends Component {
         const { newUser } = this.state;
         if (newUser.password !== newUser.passwordConfirmation) {
             return this.setState({
-                error: 'The password and password confirmation does not match'
+                error: 'La contraseña y el campo de confirmación deben ser iguales'
             });
         }
 
@@ -65,6 +65,13 @@ class SignUp extends Component {
             <View style={styles.container}>
                 {error && <Text>{error}</Text>}
                 <TextInput
+                    defaultValue={newUser.name}
+                    onChangeText={(value) => this.updateInputValue('name', value)}
+                    style={styles.textInput}
+                    placeholder="Nombre"
+                    value={newUser.name}
+                />
+                <TextInput
                     defaultValue={newUser.email}
                     onChangeText={(value) => this.updateInputValue('email', value)}
                     placeholder="Correo"
@@ -87,13 +94,6 @@ class SignUp extends Component {
                     secureTextEntry={true}
                     style={styles.textInput}
                     value={newUser.passwordConfirmation}
-                />
-                <TextInput
-                    defaultValue={newUser.name}
-                    onChangeText={(value) => this.updateInputValue('name', value)}
-                    style={styles.textInput}
-                    placeholder="Nombre"
-                    value={newUser.name}
                 />
                 <Picker
                     onValueChange={(value) => this.updateInputValue('role', value)}

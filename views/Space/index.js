@@ -16,7 +16,7 @@ class Index extends Component {
 
     componentDidMount(){
         const ENDPOINT = endpoints.SPACE.GET_ALL;
-        const url = endpointGenerator(ENDPOINT);
+        const url = endpointGenerator(ENDPOINT.PATH);
         axios({
             method: ENDPOINT.METHOD,
             url: url
