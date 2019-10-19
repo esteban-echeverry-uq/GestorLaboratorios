@@ -25,7 +25,8 @@ module.exports = class SessionService {
 		};
 
 		try {
-			const { data } = await ServerAction(USER_ENDPOINTS.LOGIN, options);
+			const { data } = await ServerAction(USER_ENDPOINTS.LOGIN, {}, options);
+
 
 			if (data.status === 'success') {
 				const { user } = data;
@@ -59,7 +60,7 @@ module.exports = class SessionService {
 		};
 
 		try {
-			const { data } = await ServerAction(USER_ENDPOINTS.REGISTER, options);
+			const { data } = await ServerAction(USER_ENDPOINTS.REGISTER, {}, options);
 
 			if (data.status === 'success') {
 				const { user } = data;

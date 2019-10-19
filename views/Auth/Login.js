@@ -26,7 +26,6 @@ class Login extends Component {
     }
 
     login() {
-        console.log(this.state.newUser);
         sessionService.login(this.state.newUser).then(response => {
             if (response.status === 'success') {
                 this.goToSpacesIndex();
