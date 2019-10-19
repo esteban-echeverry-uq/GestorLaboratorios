@@ -1,7 +1,7 @@
 const domainURL = 'https://gestor-laboratorios.herokuapp.com';
 
-module.exports = (ENDPOINT, options) => {
-	const path = eval(ENDPOINT.PATH);
+module.exports = (PATH, options) => {
+	const path = eval(PATH);
 
 	return `${domainURL}/${path}`
 };

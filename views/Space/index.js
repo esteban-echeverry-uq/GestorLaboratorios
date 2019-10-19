@@ -3,7 +3,7 @@ import { FlatList, View, StyleSheet } from 'react-native';
 import ListItem from '../../components/ListItem';
 import axios from 'axios';
 const endpoints = require('../../configs/constants/endpoints');
-const endpointGenerator = require('../../helpers/endpointGenerator');
+const endpointGenerator = require('../../helpers/endpointURLGenerator');
 
 class Index extends Component {
     

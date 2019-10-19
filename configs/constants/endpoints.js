@@ -21,7 +21,7 @@ module.exports = {
 		},
 		GET_ALL: {
 			PATH: '`api/users`',
-			METHOD: httpMethods.POST
+			METHOD: httpMethods.GET
 		},
 		LOGIN: {
 			PATH: '`api/login`',
@@ -29,7 +29,7 @@ module.exports = {
 		},
 		REGISTER: {
 			PATH: '`api/register`',
-			METHOD: httpMethods.GET
+			METHOD: httpMethods.POST
 		}
 	},
 	SPACE: {

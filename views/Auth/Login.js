@@ -8,29 +8,76 @@ import {
     Text 
 } from 'react-native';
 import { Actions } from "react-native-router-flux";
-import axios from 'axios';
-const endpoints = require('../../configs/constants/endpoints');
-const endpointGenerator = require('../../helpers/endpointGenerator');
+
+const SessionService = require('../../services/sessionService');
+const sessionService = new SessionService();
 
 class Login extends Component {
+    constructor(props) {
+        super(props);
 
-    render(){
-        const goToSignUp = () => {
-            Actions.signUp()
-        }
+        this.state = {
+            error: null,
+            newUser: {
+                email: undefined,
+                password: undefined
+            }
+        };
+    }
 
-        const goToSpacesIndex = () => {
-            Actions.spacesIndex()
-        }
+    login() {
+        console.log(this.state.newUser);
+        sessionService.login(this.state.newUser).then(response => {
+            if (response.status === 'success') {
+                this.goToSpacesIndex();
+            }
+            else {
+                this.setState({ error: response.message });
+            }
+        });
+    }
+
+    goToSignUp() {
+        Actions.signUp();
+    }
+
+    goToSpacesIndex() {
+        Actions.spacesIndex();
+    }
+
+    updateInputValue(input, value) {
+        let newUser = Object.assign({}, this.state.newUser);
+        newUser[input] = value;
+
+        this.setState({ newUser, error: null });
+    }
+
+    render() {
+        const { error, newUser } = this.state;
 
         return(
             <View style={styles.container}>
-                <TextInput style={styles.textInput} placeholder="Correo" textContentType="emailAddress" />
-                <TextInput style={styles.textInput} secureTextEntry={true} placeholder="Constraseña" />
+                {error && <Text>{error}</Text>}
+                <TextInput
+                    defaultValue={newUser.email}
+                    onChangeText={(value) => this.updateInputValue('email', value)}
+                    placeholder="Correo"
+                    style={styles.textInput}
+                    textContentType="emailAddress"
+                    value={newUser.email}
+                />
+                <TextInput
+                    defaultValue={newUser.password}
+                    onChangeText={(value) => this.updateInputValue('password', value)}
+                    placeholder="Constraseña"
+                    secureTextEntry={true}
+                    style={styles.textInput}
+                    value={newUser.password}
+                />
                 <View style={styles.button}>
-                    <Button title="Conectarse" color="white" onPress={() => goToSpacesIndex()}/>
+                    <Button title="Conectarse" color="blue" onPress={() => this.login()}/>
                 </View>
-                <TouchableOpacity onPress={() => goToSignUp()}>
+                <TouchableOpacity onPress={() => this.goToSignUp()}>
                     <Text style={styles.link}>
                         Crear Cuenta
                     </Text>

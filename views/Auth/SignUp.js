@@ -10,40 +10,102 @@ import {
     Picker
 } from 'react-native';
 import { Actions } from "react-native-router-flux";
-import axios from 'axios';
-const endpoints = require('../../configs/constants/endpoints');
-const endpointGenerator = require('../../helpers/endpointGenerator');
+
+const SessionService = require('../../services/sessionService');
+const sessionService = new SessionService();
 
 class SignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userType: "estudiante"
+            error: null,
+            newUser: {
+                email: undefined,
+                password: undefined,
+                passwordConfirmation: undefined,
+                name: undefined,
+                role: 'student'
+            }
         };
     }
 
-    render(){
-        const goToLogin = () => {
-            Actions.pop()
+    register() {
+        const { newUser } = this.state;
+        if (newUser.password !== newUser.passwordConfirmation) {
+            return this.setState({
+                error: 'The password and password confirmation does not match'
+            });
         }
+
+        sessionService.register(newUser).then(response => {
+            if (response.status === 'success') {
+                Actions.spacesIndex();
+            }
+            else {
+                this.setState({ error: response.message });
+            }
+        });
+    }
+
+    goToLogin() {
+        Actions.pop();
+    }
+
+    updateInputValue(input, value) {
+        let newUser = Object.assign({}, this.state.newUser);
+        newUser[input] = value;
+
+        this.setState({ newUser, error: null });
+    }
+
+    render() {
+        const { error, newUser } = this.state;
 
         return(
             <View style={styles.container}>
-                <TextInput style={styles.textInput} placeholder="Correo" textContentType="emailAddress" />
-                <TextInput style={styles.textInput} secureTextEntry={true} placeholder="Contraseña" />
-                <TextInput style={styles.textInput} secureTextEntry={true} placeholder="Confirmar Contraseña" />
+                {error && <Text>{error}</Text>}
+                <TextInput
+                    defaultValue={newUser.email}
+                    onChangeText={(value) => this.updateInputValue('email', value)}
+                    placeholder="Correo"
+                    style={styles.textInput}
+                    textContentType="emailAddress"
+                    value={newUser.email}
+                />
+                <TextInput
+                    defaultValue={newUser.password}
+                    onChangeText={(value) => this.updateInputValue('password', value)}
+                    placeholder="Contraseña"
+                    secureTextEntry={true}
+                    style={styles.textInput}
+                    value={newUser.password}
+                />
+                <TextInput
+                    defaultValue={newUser.passwordConfirmation}
+                    onChangeText={(value) => this.updateInputValue('passwordConfirmation', value)}
+                    placeholder="Confirmar Contraseña"
+                    secureTextEntry={true}
+                    style={styles.textInput}
+                    value={newUser.passwordConfirmation}
+                />
+                <TextInput
+                    defaultValue={newUser.name}
+                    onChangeText={(value) => this.updateInputValue('name', value)}
+                    style={styles.textInput}
+                    placeholder="Nombre"
+                    value={newUser.name}
+                />
                 <Picker
-                    selectedValue={ this.state.userType}
-                    onValueChange={ (itemValue) => this.setState({userType: itemValue})
-                    }
+                    onValueChange={(value) => this.updateInputValue('role', value)}
+                    selectedValue={newUser.role}
                 >
-                    <Picker.Item label="Estudiante" value="estudiante" />
-                    <Picker.Item label="Docente" value="docente" />
+                    <Picker.Item label="Estudiante" value="student" />
+                    <Picker.Item label="Docente" value="teacher" />
                 </Picker>
                 <View style={styles.button}>
-                    <Button title="Registrarse" color="white" onPress={() => Alert.alert('Simple Button pressed')}/>
+                    <Button onPress={() => this.register()} title="Registrarse" color="blue"/>
                 </View>
-                <TouchableOpacity onPress={() => goToLogin()}>
+                <TouchableOpacity onPress={() => this.goToLogin()}>
                     <Text style={styles.link}>
                         Registrarse
                     </Text>

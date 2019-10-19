@@ -1,11 +1,12 @@
-const endpoints = require('../configs/constants/endpoints');
-const endpointGenerator = require('./endpointGenerator');
+const SessionService = require('../services/sessionService');
+const sessionService = new SessionService();
 
-const ENDPOINT = endpoints.ROOM.GET_BY_ID;
-const options = {
-	roomID: '1',
-	spaceID: '2'
-};
+sessionService.login({
+	email: 'jjms95@hotmail.com',
+	password: '12345'
+}).then(response => {
+	console.log(response);
+}).catch(error => {
+	console.log(error);
+});
 
-const url = endpointGenerator(ENDPOINT, options);
-console.log(url);
