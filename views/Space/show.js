@@ -16,7 +16,7 @@ class Show extends Component {
             <SafeAreaView style={styles.container}>
                 <FlatList
                     data={DATA}
-                    renderItem={({ item }) => <ListItem title={this.props.title} />}
+                    renderItem={() => <ListItem title={this.props.title} action={() => console.log("click")} />}
                     keyExtractor={item => item.id}
                 />
             </SafeAreaView>

@@ -8,9 +8,9 @@ import SignUp from './views/Auth/SignUp'
 const Routes = () => (
     <Router>
         <Scene key="root" style>
-            <Scene key="login" component={Login} title="Iniciar Sesión" initial={true} />
+            <Scene key="login" component={Login} title="Iniciar Sesión" />
             <Scene key="signUp" component={SignUp} title="Crear Cuenta" />
-            <Scene key="spacesIndex" component={Spaces} title="Facultades" />
+            <Scene key="spacesIndex" component={Spaces} title="Facultades" initial={true}/>
             <Scene key="showSpace" component={ShowSpace} title />
         </Scene>
     </Router>

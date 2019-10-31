@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { FlatList, View, StyleSheet } from 'react-native';
 import ListItem from '../../components/ListItem';
+import { Actions } from 'react-native-router-flux';
 import axios from 'axios';
 const endpoints = require('../../configs/constants/endpoints');
 const endpointGenerator = require('../../helpers/endpointURLGenerator');
@@ -31,6 +32,10 @@ class Index extends Component {
         });
     }
 
+    goToShowSpace = (title) => {
+        Actions.showSpace({title})
+    }
+
     render(){
         let {spaces} = this.state;
 
@@ -39,7 +44,7 @@ class Index extends Component {
             <View style={styles.container}>
                 <FlatList
                     data={spaces}
-                    renderItem={({ item }) => <ListItem title={item.name} />}
+                    renderItem={({ item }) => <ListItem title={item.name} action={this.goToShowSpace} />}
                     keyExtractor={item => item._id}
                 />
             </View>

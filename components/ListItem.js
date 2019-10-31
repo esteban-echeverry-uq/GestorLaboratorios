@@ -1,15 +1,10 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 
-const ListItem = ({title}) => {
-
-    const goToShowSpace = (title) => {
-        Actions.showSpace({title})
-     }
+const ListItem = ({title, action}) => {
 
     return (
-        <TouchableOpacity style={styles.item} onPress={() => goToShowSpace(title)}>
+        <TouchableOpacity style={styles.item} onPress={() => action(title)}>
             <Text style={styles.title}>{title}</Text>
         </TouchableOpacity>
     )
