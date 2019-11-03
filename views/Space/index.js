@@ -21,9 +21,9 @@ class Index extends Component {
         const url = endpointGenerator(ENDPOINT.PATH);
         axios({
             method: ENDPOINT.METHOD,
-            url: url
+            url
         })
-        .then((response) =>{
+        .then((response) => {
             this.setState({
                 spaces: response.data.spaces
             })
@@ -33,8 +33,8 @@ class Index extends Component {
         });
     }
 
-    goToShowSpace = (title) => {
-        Actions.showSpace({title})
+    goToShowSpace = (spaceData) => {
+        Actions.showSpace({spaceData, title: spaceData.name})
     }
 
     goToCreateSpace = () => {
@@ -52,7 +52,7 @@ class Index extends Component {
                 </View>
                 <FlatList
                     data={spaces}
-                    renderItem={({ item }) => <ListItem title={item.name} action={this.goToShowSpace} />}
+                    renderItem={({ item }) => <ListItem item={item} action={this.goToShowSpace} />}
                     keyExtractor={item => item._id}
                 />
             </View> || <Text>Aún no se han creado facultades</Text>
