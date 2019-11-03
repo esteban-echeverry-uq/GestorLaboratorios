@@ -7,80 +7,55 @@ import {
     TouchableOpacity, 
     Text 
 } from 'react-native';
+import axios from 'axios';
 import { Actions } from "react-native-router-flux";
-
-const SessionService = require('../../services/sessionService');
-const sessionService = new SessionService();
+const endpoints = require('../../configs/constants/endpoints');
+const endpointGenerator = require('../../helpers/endpointURLGenerator');
 
 class SpaceForm extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
-            error: null,
-            newUser: {
-                email: undefined,
-                password: undefined
-            }
+            name: '',
         };
-    }
-
-    login() {
-        sessionService.login(this.state.newUser).then(response => {
-            if (response.status === 'success') {
-                this.goToSpacesIndex();
-            }
-            else {
-                this.setState({ error: response.message });
-            }
-        });
-    }
-
-    goToSignUp() {
-        Actions.signUp();
     }
 
     goToSpacesIndex() {
         Actions.spacesIndex();
     }
 
-    updateInputValue(input, value) {
-        let newUser = Object.assign({}, this.state.newUser);
-        newUser[input] = value;
+    updateValue(text,field){
+        this.setState({
+            [field]: text
+        })
+    }
 
-        this.setState({ newUser, error: null });
+    submit(){
+        const ENDPOINT = endpoints.SPACE.CREATE;
+        const url = endpointGenerator(ENDPOINT.PATH);
+        axios({
+            method: ENDPOINT.METHOD,
+            url: url,
+            data:  {...this.state}
+        }).then(() => {
+            Actions.spacesIndex();
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
     }
 
     render() {
-        const { error, newUser } = this.state;
-
         return(
             <View style={styles.container}>
-                {error && <Text>{error}</Text>}
                 <TextInput
-                    defaultValue={newUser.email}
-                    onChangeText={(value) => this.updateInputValue('email', value)}
-                    placeholder="Correo"
+                    placeholder="Nombre del espacio"
                     style={styles.textInput}
-                    textContentType="emailAddress"
-                    value={newUser.email}
-                />
-                <TextInput
-                    defaultValue={newUser.password}
-                    onChangeText={(value) => this.updateInputValue('password', value)}
-                    placeholder="Constraseña"
-                    secureTextEntry={true}
-                    style={styles.textInput}
-                    value={newUser.password}
+                    onChangeText={(text) => this.updateValue(text,'name')}
                 />
                 <View style={styles.button}>
-                    <Button title="Conectarse" color="blue" onPress={() => this.login()}/>
+                    <Button title="Crear Espacio" color="white" onPress={() => this.submit()}/>
                 </View>
-                <TouchableOpacity onPress={() => this.goToSignUp()}>
-                    <Text style={styles.link}>
-                        Crear Cuenta
-                    </Text>
-                </TouchableOpacity>
             </View>
         );
     } 
