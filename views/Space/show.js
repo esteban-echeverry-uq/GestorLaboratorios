@@ -1,57 +1,40 @@
 import React, { Component } from 'react';
-import { FlatList, SafeAreaView, StyleSheet } from 'react-native';
-import ListItem from '../../components/ListItem'
-import axios from 'axios';
-const endpoints = require('../../configs/constants/endpoints');
-const endpointGenerator = require('../../helpers/endpointURLGenerator');
+import { Dimensions } from 'react-native';
+import Rooms from '../Room/index'
+import Tools from '../Tool/index'
+import { TabView } from 'react-native-tab-view';
 
 class Show extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            rooms: []
-        };
-    }
-
-    componentDidMount(){
-        const ENDPOINT = endpoints.ROOM.GET_ALL;
-        const url = endpointGenerator(ENDPOINT.PATH, { spaceID: this.props.spaceData._id});
-        axios({
-            method: ENDPOINT.METHOD,
-            url
-        })
-        .then((response) => {
-            console.warn("response", response.data);
-            this.setState({
-                rooms: response.data.rooms
-            })
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+            index: 0,
+            routes: [
+                { key: 'tools', title: 'Herramientas' },
+                { key: 'rooms', title: 'Salas' }
+            ]
+        }
     }
     
     render(){
-        let {rooms} = this.state;
-        console.warn(this.state)
         return (
-            rooms.length > 0 &&
-            <SafeAreaView style={styles.container}>
-                <FlatList
-                    data={this.state.rooms}
-                    renderItem={({item}) => <ListItem item={item} action={() => console.log("click")} />}
-                    keyExtractor={item => item._id}
-                />
-            </SafeAreaView>
+            <TabView
+                navigationState={this.state}
+                renderScene ={ ({ route }) => {
+                    switch (route.key) {
+                        case 'rooms':
+                            return <Rooms spaceData={this.props.spaceData} />;
+                        case 'tools':
+                            return <Tools spaceData={this.props.spaceData} />;
+                        default:
+                            return null;
+                    }
+                }}
+                onIndexChange={index => this.setState({ index })}
+                initialLayout={{ width: Dimensions.get('window').width }}
+            />
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: 10,
-    },
-});
 
 export default Show
