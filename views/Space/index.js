@@ -38,7 +38,7 @@ class Index extends Component {
     }
 
     goToCreateSpace = () => {
-        Actions.createSpace()
+        Actions.createSpace({submitText: "Crear Espacio"})
     }
 
     render(){

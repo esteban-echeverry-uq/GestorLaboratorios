@@ -1,10 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import { Dimensions, View, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { TabView } from 'react-native-tab-view';
+import axios from 'axios';
 import Button from '../../components/Button';
 import Rooms from '../Room/index'
 import Tools from '../Tool/index'
-import { TabView } from 'react-native-tab-view';
+const endpoints = require('../../configs/constants/endpoints');
+const endpointGenerator = require('../../helpers/endpointURLGenerator');
 
 class Show extends Component {
     constructor(props) {
@@ -19,19 +22,38 @@ class Show extends Component {
     }
     
     goToEditSpace = (spaceData) => {
-        Actions.editSpace({spaceData, title: spaceData.name})
+        Actions.editSpace({spaceData, title: spaceData.name, submitText: 'Editar Espacio'})
     }
 
-    goToDeleteSpace = (spaceData) => {
-        Actions.showSpace({spaceData, title: spaceData.name})
+    goToSpaceIndex = () => {
+        Actions.spacesIndex()
+    }
+
+    deleteSpace = () => {
+        const ENDPOINT = endpoints.SPACE.DELETE;
+        const url = endpointGenerator(ENDPOINT.PATH, {spaceID: this.props.spaceData._id});
+        axios({
+            method: ENDPOINT.METHOD,
+            url
+        })
+        .then( () => {
+            this.goToSpaceIndex()
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
     }
     
     render(){
         return (
             <Fragment>
                 <View style={styles.horizontal}>
-                    <Button title="Editar Espacio" action={this.goToEditSpace}/>
-                    <Button title="Eliminar Espacio" action={this.goToDeleteSpace}/>
+                    <Button title="Editar Espacio" action={() => this.goToEditSpace(this.props.spaceData)}/>
+                    <Button title="Eliminar Espacio" action={this.deleteSpace}/>
+                </View>
+                <View style={styles.horizontal}>
+                    <Button title="Crear Sala" action={this.goToEditSpace}/>
+                    <Button title="Crear Herramienta" action={this.deleteSpace}/>
                 </View>
                 <TabView
                     navigationState={this.state}

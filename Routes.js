@@ -3,6 +3,7 @@ import { Router, Scene } from 'react-native-router-flux'
 import Spaces from './views/Space/index'
 import ShowSpace from './views/Space/show'
 import CreateSpace from './views/Space/form'
+import EditSpace from './views/Space/form'
 import Login from './views/Auth/Login'
 import SignUp from './views/Auth/SignUp'
 
@@ -11,9 +12,11 @@ const Routes = () => (
         <Scene key="root" style>
             <Scene key="login" component={Login} title="Iniciar Sesión" />
             <Scene key="signUp" component={SignUp} title="Crear Cuenta" />
+
             <Scene key="spacesIndex" component={Spaces} title="Facultades" initial={true}/>
             <Scene key="showSpace" component={ShowSpace} title />
             <Scene key="createSpace" component={CreateSpace} title="Crear Espacio" />
+            <Scene key="editSpace" component={EditSpace} title="Editar Espacio" />
         </Scene>
     </Router>
 )

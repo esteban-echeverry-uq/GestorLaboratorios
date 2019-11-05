@@ -35,7 +35,7 @@ class SpaceForm extends Component {
         const url = endpointGenerator(ENDPOINT.PATH);
         axios({
             method: ENDPOINT.METHOD,
-            url: url,
+            url,
             data:  {...this.state}
         }).then(() => {
             Actions.spacesIndex();
@@ -46,15 +46,16 @@ class SpaceForm extends Component {
     }
 
     render() {
+        let {spaceData} = this.props;
         return(
             <View style={styles.container}>
                 <TextInput
-                    placeholder="Nombre del espacio"
+                    placeholder={spaceData ? spaceData.name : "Nombre del espacio"}
                     style={styles.textInput}
                     onChangeText={(text) => this.updateValue(text,'name')}
                 />
                 <View style={styles.button}>
-                    <Button title="Crear Espacio" color="white" onPress={() => this.submit()}/>
+                    <Button title={this.props.submitText} color="white" onPress={() => this.submit()}/>
                 </View>
             </View>
         );
