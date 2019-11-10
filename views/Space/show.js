@@ -34,6 +34,13 @@ class Show extends Component {
         Actions.spacesIndex()
     }
 
+    goToCreateRoom = (spaceData) => {
+        Actions.createRoom({
+            spaceData,
+            submitText: 'Crear Sala'
+        })
+    }
+
     deleteSpace = () => {
         const ENDPOINT = endpoints.SPACE.DELETE;
         const url = endpointGenerator(ENDPOINT.PATH, {spaceID: this.props.spaceData._id});
@@ -50,14 +57,15 @@ class Show extends Component {
     }
     
     render(){
+        let {spaceData} = this.props;
         return (
             <Fragment>
                 <View style={styles.horizontal}>
-                    <Button title="Editar Espacio" action={() => this.goToEditSpace(this.props.spaceData)}/>
+                    <Button title="Editar Espacio" action={() => this.goToEditSpace(spaceData)}/>
                     <Button title="Eliminar Espacio" action={this.deleteSpace}/>
                 </View>
                 <View style={styles.horizontal}>
-                    <Button title="Crear Sala" action={this.goToCreateRoom}/>
+                    <Button title="Crear Sala" action={() => this.goToCreateRoom(spaceData)}/>
                     <Button title="Crear Herramienta" action={this.deleteSpace}/>
                 </View>
                 <TabView
@@ -65,9 +73,9 @@ class Show extends Component {
                     renderScene ={ ({ route }) => {
                         switch (route.key) {
                             case 'rooms':
-                                return <Rooms spaceData={this.props.spaceData} />;
+                                return <Rooms spaceData={spaceData} />;
                             case 'tools':
-                                return <Tools spaceData={this.props.spaceData} />;
+                                return <Tools spaceData={spaceData} />;
                             default:
                                 return null;
                         }

@@ -17,13 +17,13 @@ const styles = StyleSheet.create({
         borderColor: '#176623',
         borderWidth: 4,
         borderRadius: 4,
-        padding: 16,
+        padding: 10,
         marginVertical: 8,
         marginHorizontal: 16,
     },
     title: {
         color: 'white',
-        fontSize: 26,
+        fontSize: 18,
     },
 });
 
