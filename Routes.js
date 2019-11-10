@@ -2,9 +2,9 @@ import React from 'react'
 import { Router, Scene } from 'react-native-router-flux'
 import Login from './views/Auth/Login'
 import SignUp from './views/Auth/SignUp'
-import Spaces from './views/Space/index'
-import ShowSpace from './views/Space/show'
-import SpaceForm from './views/Space/form'
+import Spaces from './views/Space/Index'
+import ShowSpace from './views/Space/Show'
+import SpaceForm from './views/Space/Form'
 import RoomForm from './views/Room/Form'
 
 const Routes = () => (

@@ -4,8 +4,8 @@ import { Actions } from 'react-native-router-flux';
 import { TabView } from 'react-native-tab-view';
 import axios from 'axios';
 import Button from '../../components/Button';
-import Rooms from '../Room/index'
-import Tools from '../Tool/index'
+import Rooms from '../Room/Index'
+import Tools from '../Tool/Index'
 const endpoints = require('../../configs/constants/endpoints');
 const endpointGenerator = require('../../helpers/endpointURLGenerator');
 
