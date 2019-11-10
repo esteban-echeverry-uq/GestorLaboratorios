@@ -35,14 +35,15 @@ export default class Routes extends Component {
 
     render() {
         const { currentUser } = this.state;
+        console.warn(currentUser)
 
         return (this._isMounted &&
             <Router>
                 <Scene key='root'>
-                    <Scene key='login' component={Login} title='Iniciar Sesión' initial={true}/>
+                    <Scene key='login' component={Login} title='Iniciar Sesión' initial={!currentUser}/>
                     <Scene key='signUp' component={SignUp} title='Crear Cuenta' />
 
-                    <Scene key='spacesIndex' component={Spaces} title='Facultades' currentUser={currentUser}/>
+                    <Scene key='spacesIndex' component={Spaces} title='Facultades' initial={currentUser} currentUser={currentUser}/>
                     <Scene key='showSpace' component={ShowSpace} title />
                     <Scene key='createSpace' component={SpaceForm} title='Crear Espacio' />
                     <Scene key='editSpace' component={SpaceForm} title='Editar Espacio' />
