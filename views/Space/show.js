@@ -41,6 +41,13 @@ class Show extends Component {
         })
     }
 
+    goToCreateTool = (spaceData) => {
+        Actions.createTool({
+            spaceData,
+            submitText: 'Crear Herramienta'
+        })
+    }
+
     deleteSpace = () => {
         const ENDPOINT = endpoints.SPACE.DELETE;
         const url = endpointGenerator(ENDPOINT.PATH, {spaceID: this.props.spaceData._id});
@@ -66,7 +73,7 @@ class Show extends Component {
                 </View>
                 <View style={styles.horizontal}>
                     <Button title="Crear Sala" action={() => this.goToCreateRoom(spaceData)}/>
-                    <Button title="Crear Herramienta" action={this.deleteSpace}/>
+                    <Button title="Crear Herramienta" action={() => this.goToCreateTool(spaceData)}/>
                 </View>
                 <TabView
                     navigationState={this.state}

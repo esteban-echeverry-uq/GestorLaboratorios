@@ -10,7 +10,7 @@ import { Actions } from "react-native-router-flux";
 const endpoints = require('../../configs/constants/endpoints');
 const endpointGenerator = require('../../helpers/endpointURLGenerator');
 
-class RoomForm extends Component {
+class ToolForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -32,10 +32,10 @@ class RoomForm extends Component {
         let ENDPOINT, url;
         let {spaceData} = this.props;
         if (this.props.action === 'edit'){
-            ENDPOINT = endpoints.ROOM.UPDATE;
+            ENDPOINT = endpoints.TOOL.UPDATE;
             url = endpointGenerator(ENDPOINT.PATH, {spaceID: spaceData._id});
         } else{
-            ENDPOINT = endpoints.ROOM.CREATE;
+            ENDPOINT = endpoints.TOOL.CREATE;
             url = endpointGenerator(ENDPOINT.PATH, {spaceID: spaceData._id});
         }
         axios({
@@ -55,11 +55,11 @@ class RoomForm extends Component {
     }
 
     render() {
-        let {roomData} = this.props;
+        let {toolData} = this.props;
         return(
             <View style={styles.container}>
                 <TextInput
-                    placeholder={roomData ? roomData.name : "Nombre de la sala"}
+                    placeholder={toolData ? toolData.name : "Nombre de la Herramienta"}
                     style={styles.textInput}
                     onChangeText={(text) => this.updateValue(text,'name')}
                 />
@@ -103,4 +103,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default RoomForm
+export default ToolForm
