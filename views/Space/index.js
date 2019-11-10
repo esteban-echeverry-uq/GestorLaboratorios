@@ -55,7 +55,7 @@ class Index extends Component {
                     renderItem={({ item }) => <ListItem item={item} action={this.goToShowSpace} />}
                     keyExtractor={item => item._id}
                 />
-            </View> || <Text>Aún no se han creado facultades</Text>
+            </View> || <Button title="Crear Espacio" action={this.goToCreateSpace}/>
         );
     } 
 }

@@ -3,9 +3,7 @@ import {
     Button, 
     TextInput, 
     View, 
-    StyleSheet, 
-    TouchableOpacity, 
-    Text 
+    StyleSheet,
 } from 'react-native';
 import axios from 'axios';
 import { Actions } from "react-native-router-flux";
@@ -31,8 +29,14 @@ class SpaceForm extends Component {
     }
 
     submit(){
-        const ENDPOINT = endpoints.SPACE.CREATE;
-        const url = endpointGenerator(ENDPOINT.PATH);
+        let ENDPOINT, url;
+        if (this.props.action === 'edit'){
+            ENDPOINT = endpoints.SPACE.UPDATE;
+            url = endpointGenerator(ENDPOINT.PATH, {spaceID: this.props.spaceData._id});
+        } else{
+            ENDPOINT = endpoints.SPACE.CREATE;
+            url = endpointGenerator(ENDPOINT.PATH);
+        }
         axios({
             method: ENDPOINT.METHOD,
             url,

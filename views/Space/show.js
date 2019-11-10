@@ -15,14 +15,19 @@ class Show extends Component {
         this.state = {
             index: 0,
             routes: [
-                { key: 'tools', title: 'Herramientas' },
-                { key: 'rooms', title: 'Salas' }
+                { key: 'rooms', title: 'Salas' },
+                { key: 'tools', title: 'Herramientas' }
             ]
         }
     }
     
     goToEditSpace = (spaceData) => {
-        Actions.editSpace({spaceData, title: spaceData.name, submitText: 'Editar Espacio'})
+        Actions.editSpace({
+            spaceData,
+            title: spaceData.name,
+            submitText: 'Editar Espacio',
+            action: 'edit'
+        })
     }
 
     goToSpaceIndex = () => {
@@ -52,7 +57,7 @@ class Show extends Component {
                     <Button title="Eliminar Espacio" action={this.deleteSpace}/>
                 </View>
                 <View style={styles.horizontal}>
-                    <Button title="Crear Sala" action={this.goToEditSpace}/>
+                    <Button title="Crear Sala" action={this.goToCreateRoom}/>
                     <Button title="Crear Herramienta" action={this.deleteSpace}/>
                 </View>
                 <TabView
