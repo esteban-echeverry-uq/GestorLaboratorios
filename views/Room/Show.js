@@ -22,9 +22,13 @@ class Show extends Component {
             url
         })
         .then((response) => {
-            this.setState({
-                reservations: response.data.reservations
-            })
+            if (response.status == 'success'){
+                this.setState({
+                    reservations: response.data.reservations
+                })
+            }else{
+                console.warn(response.status)
+            }
         })
         .catch(function (error) {
             console.log(error);

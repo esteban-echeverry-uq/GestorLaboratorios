@@ -43,7 +43,6 @@ class Index extends Component {
 
     render(){
         let {spaces} = this.state;
-
         return(
             spaces.length > 0 &&
             <View style={styles.container}>

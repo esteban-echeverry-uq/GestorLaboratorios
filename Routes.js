@@ -42,7 +42,7 @@ export default class Routes extends Component {
                     <Scene key='login' component={Login} title='Iniciar Sesión' initial={true}/>
                     <Scene key='signUp' component={SignUp} title='Crear Cuenta' />
 
-                    <Scene key='spacesIndex' component={Spaces} title='Facultades'/>
+                    <Scene key='spacesIndex' component={Spaces} title='Facultades' currentUser={currentUser}/>
                     <Scene key='showSpace' component={ShowSpace} title />
                     <Scene key='createSpace' component={SpaceForm} title='Crear Espacio' />
                     <Scene key='editSpace' component={SpaceForm} title='Editar Espacio' />
@@ -53,7 +53,7 @@ export default class Routes extends Component {
                     <Scene key='createTool' component={ToolForm} title='Crear Herramienta' />
                     <Scene key='showTool' component={ShowTool} title />
 
-                    <Scene key='createReservation' component={ReservationForm} title='Crear Reserva' />
+                    <Scene key='createReservation' component={ReservationForm} title='Crear Reserva' currentUser={currentUser}/>
                 </Scene>
             </Router>
         )

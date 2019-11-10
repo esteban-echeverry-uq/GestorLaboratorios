@@ -11,6 +11,8 @@ import axios from 'axios';
 import { Actions } from "react-native-router-flux";
 const endpoints = require('../../configs/constants/endpoints');
 const endpointGenerator = require('../../helpers/endpointURLGenerator');
+const ReservationService = require('../../services/reservationService');
+const reservationService = new ReservationService();
 
 class ReservationForm extends Component {
     constructor(props) {
@@ -33,20 +35,16 @@ class ReservationForm extends Component {
     }
 
     submit(){
-        let ENDPOINT, url;
-        if (this.props.action === 'edit'){
-            ENDPOINT = endpoints.RESERVATION.CREATE;
-            url = endpointGenerator(ENDPOINT.PATH, {elementID: this.props.elementData._id});
-        } else{
-            ENDPOINT = endpoints.SPACE.CREATE;
-            url = endpointGenerator(ENDPOINT.PATH);
-        }
-        axios({
-            method: ENDPOINT.METHOD,
-            url,
-            data:  {...this.state}
-        }).then(() => {
-            Actions.spacesIndex();
+        reservationService.create({
+            ...this.state,
+            userID: this.props.currentUser._id,
+            elementID: this.props.elementData._id
+        }).then((response) => {
+            if (response.status == 'success'){
+                Actions.spacesIndex();
+            }else{
+                console.warn(response)
+            }
         })
         .catch(function (error) {
             console.log(error);
@@ -57,11 +55,6 @@ class ReservationForm extends Component {
         let {spaceData} = this.props;
         return(
             <View style={styles.container}>
-                <TextInput
-                    placeholder={spaceData ? spaceData.name : "Nombre del espacio"}
-                    style={styles.textInput}
-                    onChangeText={(text) => this.updateValue(text,'name')}
-                />
                 <Dropdown
                     label='Hora de Inicio'
                     data={dropDownData}

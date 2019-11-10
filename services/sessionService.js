@@ -5,7 +5,7 @@ const { USER: USER_ENDPOINTS } = require('../configs/constants/endpoints');
 module.exports = class SessionService {
 	async getCurrentUser() {
 		try {
-			const currentUser = StoreAction.get('currentUser');
+			const currentUser = await StoreAction.get('currentUser');
 
 			return {
 				status: 'success',

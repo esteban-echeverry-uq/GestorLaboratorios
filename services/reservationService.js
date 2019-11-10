@@ -9,7 +9,7 @@ module.exports = class SessionService {
 		};
 
 		try {
-			const { data } = ServerAction(RERVATION_ENDPOINTS.ADMIN_GET_ALL, {}, options);
+			const { data } = await ServerAction(RERVATION_ENDPOINTS.ADMIN_GET_ALL, {}, options);
 
 			if (data.status === 'success') {
 				return {

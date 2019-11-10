@@ -62,7 +62,6 @@ class Show extends Component {
             console.log(error);
         });
     }
-    
     render(){
         let {spaceData} = this.props;
         return (
