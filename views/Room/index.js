@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { FlatList, SafeAreaView, StyleSheet } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import ListItem from '../../components/ListItem'
 import axios from 'axios';
 const endpoints = require('../../configs/constants/endpoints');
@@ -29,6 +30,14 @@ class Rooms extends Component {
             console.log(error);
         });
     }
+
+    goToShowRoom = (roomData) => {
+        Actions.showRoom({
+            roomData,
+            spaceData: this.props.spaceData,
+            title: roomData.name
+        })
+    }
     
     render(){
         let {rooms} = this.state;
@@ -37,7 +46,7 @@ class Rooms extends Component {
             <SafeAreaView style={styles.container}>
                 <FlatList
                     data={this.state.rooms}
-                    renderItem={({item}) => <ListItem item={item} action={() => console.log("click")} />}
+                    renderItem={({item}) => <ListItem item={item} action={this.goToShowRoom} />}
                     keyExtractor={item => item._id}
                 />
             </SafeAreaView>

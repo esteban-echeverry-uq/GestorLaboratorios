@@ -6,22 +6,26 @@ import Spaces from './views/Space/Index'
 import ShowSpace from './views/Space/Show'
 import SpaceForm from './views/Space/Form'
 import RoomForm from './views/Room/Form'
+import ShowRoom from './views/Room/Show'
 import ToolForm from './views/Tool/Form'
+import ShowTool from './views/Tool/Show'
 
 const Routes = () => (
     <Router>
-        <Scene key="root" style>
-            <Scene key="login" component={Login} title="Iniciar Sesión" />
-            <Scene key="signUp" component={SignUp} title="Crear Cuenta" />
+        <Scene key='root' style>
+            <Scene key='login' component={Login} title='Iniciar Sesión' />
+            <Scene key='signUp' component={SignUp} title='Crear Cuenta' />
 
-            <Scene key="spacesIndex" component={Spaces} title="Facultades" initial={true}/>
-            <Scene key="showSpace" component={ShowSpace} title />
-            <Scene key="createSpace" component={SpaceForm} title="Crear Espacio" />
-            <Scene key="editSpace" component={SpaceForm} title="Editar Espacio" />
+            <Scene key='spacesIndex' component={Spaces} title='Facultades' initial={true}/>
+            <Scene key='showSpace' component={ShowSpace} title />
+            <Scene key='createSpace' component={SpaceForm} title='Crear Espacio' />
+            <Scene key='editSpace' component={SpaceForm} title='Editar Espacio' />
 
-            <Scene key="createRoom" component={RoomForm} title="Crear Sala" />
+            <Scene key='createRoom' component={RoomForm} title='Crear Sala' />
+            <Scene key='showRoom' component={ShowRoom} title />
 
-            <Scene key="createTool" component={ToolForm} title="Crear Herramienta" />
+            <Scene key='createTool' component={ToolForm} title='Crear Herramienta' />
+            <Scene key='showTool' component={ShowTool} title />
         </Scene>
     </Router>
 )

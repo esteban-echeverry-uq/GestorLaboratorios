@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { FlatList, SafeAreaView, StyleSheet } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import ListItem from '../../components/ListItem'
 import axios from 'axios';
 const endpoints = require('../../configs/constants/endpoints');
@@ -29,6 +30,14 @@ class Tools extends Component {
             console.log(error);
         });
     }
+
+    goToShowTools = (toolData) => {
+        Actions.showTool({
+            toolData,
+            spaceData: this.props.spaceData,
+            title: toolData.name
+        })
+    }
     
     render(){
         let {tools} = this.state;
@@ -37,7 +46,7 @@ class Tools extends Component {
             <SafeAreaView style={styles.container}>
                 <FlatList
                     data={this.state.tools}
-                    renderItem={({item}) => <ListItem item={item} action={() => console.log("click")} />}
+                    renderItem={({item}) => <ListItem item={item} action={this.goToShowTools} />}
                     keyExtractor={item => item._id}
                 />
             </SafeAreaView>
