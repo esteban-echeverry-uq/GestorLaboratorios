@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import axios from 'axios';
 import Button from '../../components/Button';
-const endpoints = require('../../configs/constants/endpoints');
-const endpointGenerator = require('../../helpers/endpointURLGenerator');
+
+const ReservationService = require('../../services/reservationService');
+const reservationService = new ReservationService();
 
 class Show extends Component {
     constructor(props) {
@@ -14,24 +14,16 @@ class Show extends Component {
         }
     }
 
-    componentDidMount(){
-        const ENDPOINT = endpoints.RESERVATION.GET_ALL_BY_ELEMENT;
-        const url = endpointGenerator(ENDPOINT.PATH, {elementID: this.props.roomData._id});
-        axios({
-            method: ENDPOINT.METHOD,
-            url
-        })
-        .then((response) => {
-            if (response.status == 'success'){
+    componentDidMount() {
+        reservationService.getAllByElement(this.props.roomData._id).then(response => {
+            if (response.status === 'success') {
                 this.setState({
-                    reservations: response.data.reservations
-                })
-            }else{
-                console.warn(response.status)
+                    reservations: response.reservations
+                });
             }
-        })
-        .catch(function (error) {
-            console.log(error);
+            else {
+                console.warn(response.status);
+            }
         });
     }
 
@@ -43,7 +35,7 @@ class Show extends Component {
     }
 
     renderReservations(){
-        return this.state.reservations.map( (reservation) => <Text>{reservation}</Text>)
+        return this.state.reservations.map( (reservation) => <Text>{reservation.status}</Text>)
     }
     
     render(){
