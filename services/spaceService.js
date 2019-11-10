@@ -4,7 +4,7 @@ const { SPACE: SPACE_ENDPOINTS } = require('../configs/constants/endpoints');
 module.exports = class SessionService {
 	async getAll() {
 		try {
-			const { data } = ServerAction(SPACE_ENDPOINTS.GET_ALL);
+			const { data } = await ServerAction(SPACE_ENDPOINTS.GET_ALL);
 
 			if (data.status === 'success') {
 				return {
@@ -30,7 +30,7 @@ module.exports = class SessionService {
 		const URLParams = { spaceID	};
 
 		try {
-			const { data } = ServerAction(SPACE_ENDPOINTS.GET_BY_ID, URLParams);
+			const { data } = await ServerAction(SPACE_ENDPOINTS.GET_BY_ID, URLParams);
 
 			if (data.status === 'success') {
 				return {
@@ -58,7 +58,7 @@ module.exports = class SessionService {
 		};
 
 		try {
-			const { data } = ServerAction(SPACE_ENDPOINTS.CREATE, {}, options);
+			const { data } = await ServerAction(SPACE_ENDPOINTS.CREATE, {}, options);
 
 			if (data.status === 'success') {
 				return {
@@ -90,7 +90,7 @@ module.exports = class SessionService {
 		};
 
 		try {
-			const { data } = ServerAction(SPACE_ENDPOINTS.UPDATE, URLParams, options);
+			const { data } = await ServerAction(SPACE_ENDPOINTS.UPDATE, URLParams, options);
 
 			if (data.status === 'success') {
 				return {
@@ -118,7 +118,7 @@ module.exports = class SessionService {
 		};
 
 		try {
-			const { data } = ServerAction(SPACE_ENDPOINTS.DELETE, URLParams);
+			const { data } = await ServerAction(SPACE_ENDPOINTS.DELETE, URLParams);
 
 			if (data.status === 'success') {
 				return {

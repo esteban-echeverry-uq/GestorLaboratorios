@@ -6,7 +6,7 @@ module.exports = class SessionService {
 		const URLParams = { spaceID	};
 
 		try {
-			const { data } = ServerAction(TOOL_ENDPOINTS.GET_ALL, URLParams);
+			const { data } = await ServerAction(TOOL_ENDPOINTS.GET_ALL, URLParams);
 
 			if (data.status === 'success') {
 				return {
@@ -28,11 +28,11 @@ module.exports = class SessionService {
 		}
 	}
 
-	async getByID(toolID, spaceID) {
-		const URLParams = { toolID, spaceID };
+	async getByID(toolID) {
+		const URLParams = { toolID };
 
 		try {
-			const { data } = ServerAction(TOOL_ENDPOINTS.GET_BY_ID, URLParams);
+			const { data } = await ServerAction(TOOL_ENDPOINTS.GET_BY_ID, URLParams);
 
 			if (data.status === 'success') {
 				return {
@@ -64,7 +64,7 @@ module.exports = class SessionService {
 		};
 
 		try {
-			const { data } = ServerAction(TOOL_ENDPOINTS.CREATE, URLParams, options);
+			const { data } = await ServerAction(TOOL_ENDPOINTS.CREATE, URLParams, options);
 
 			if (data.status === 'success') {
 				return {
@@ -92,12 +92,11 @@ module.exports = class SessionService {
 		};
 
 		const URLParams = {
-			toolID: tool._id,
-			spaceID: tool.spaceID
+			toolID: tool._id
 		};
 
 		try {
-			const { data } = ServerAction(TOOL_ENDPOINTS.UPDATE, URLParams, options);
+			const { data } = await ServerAction(TOOL_ENDPOINTS.UPDATE, URLParams, options);
 
 			if (data.status === 'success') {
 				return {
@@ -121,12 +120,11 @@ module.exports = class SessionService {
 
 	async delete(tool) {
 		const URLParams = {
-			toolID: tool._id,
-			spaceID: tool.spaceID
+			toolID: tool._id
 		};
 
 		try {
-			const { data } = ServerAction(TOOL_ENDPOINTS.DELETE, URLParams);
+			const { data } = await ServerAction(TOOL_ENDPOINTS.DELETE, URLParams);
 
 			if (data.status === 'success') {
 				return {

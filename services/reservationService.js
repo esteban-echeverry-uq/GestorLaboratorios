@@ -35,7 +35,7 @@ module.exports = class SessionService {
 		const URLParams = { elementID };
 
 		try {
-			const { data } = ServerAction(RERVATION_ENDPOINTS.GET_ALL_BY_ELEMENT, URLParams);
+			const { data } = await ServerAction(RERVATION_ENDPOINTS.GET_ALL_BY_ELEMENT, URLParams);
 
 			if (data.status === 'success') {
 				return {
@@ -61,7 +61,7 @@ module.exports = class SessionService {
 		const URLParams = { userID };
 
 		try {
-			const { data } = ServerAction(RERVATION_ENDPOINTS.GET_ALL_BY_USER, URLParams);
+			const { data } = await ServerAction(RERVATION_ENDPOINTS.GET_ALL_BY_USER, URLParams);
 
 			if (data.status === 'success') {
 				return {
@@ -83,11 +83,11 @@ module.exports = class SessionService {
 		}
 	}
 
-	async getByID(elementID, reservationID) {
-		const URLParams = { elementID, reservationID };
+	async getByID(reservationID) {
+		const URLParams = { reservationID };
 
 		try {
-			const { data } = ServerAction(RERVATION_ENDPOINTS.GET_BY_ID, URLParams);
+			const { data } = await ServerAction(RERVATION_ENDPOINTS.GET_BY_ID, URLParams);
 
 			if (data.status === 'success') {
 				return {
@@ -119,7 +119,7 @@ module.exports = class SessionService {
 		};
 
 		try {
-			const { data } = ServerAction(RERVATION_ENDPOINTS.CREATE, URLParams, options);
+			const { data } = await ServerAction(RERVATION_ENDPOINTS.CREATE, URLParams, options);
 
 			if (data.status === 'success') {
 				return {
@@ -147,12 +147,11 @@ module.exports = class SessionService {
 		};
 
 		const URLParams = {
-			reservationID: reservation._id,
-			elementID: reservation.elementID
+			reservationID: reservation._id
 		};
 
 		try {
-			const { data } = ServerAction(RERVATION_ENDPOINTS.UPDATE, URLParams, options);
+			const { data } = await ServerAction(RERVATION_ENDPOINTS.UPDATE, URLParams, options);
 
 			if (data.status === 'success') {
 				return {
@@ -176,12 +175,11 @@ module.exports = class SessionService {
 
 	async delete(reservation) {
 		const URLParams = {
-			reservationID: reservation._id,
-			elementID: reservation.elementID
+			reservationID: reservation._id
 		};
 
 		try {
-			const { data } = ServerAction(RERVATION_ENDPOINTS.DELETE, URLParams);
+			const { data } = await ServerAction(RERVATION_ENDPOINTS.DELETE, URLParams);
 
 			if (data.status === 'success') {
 				return {

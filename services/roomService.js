@@ -6,7 +6,7 @@ module.exports = class SessionService {
 		const URLParams = { spaceID	};
 
 		try {
-			const { data } = ServerAction(ROOM_ENDPOINTS.GET_ALL, URLParams);
+			const { data } = await ServerAction(ROOM_ENDPOINTS.GET_ALL, URLParams);
 
 			if (data.status === 'success') {
 				return {
@@ -28,11 +28,11 @@ module.exports = class SessionService {
 		}
 	}
 
-	async getByID(roomID, spaceID) {
-		const URLParams = { roomID, spaceID };
+	async getByID(roomID) {
+		const URLParams = { roomID };
 
 		try {
-			const { data } = ServerAction(ROOM_ENDPOINTS.GET_BY_ID, URLParams);
+			const { data } = await ServerAction(ROOM_ENDPOINTS.GET_BY_ID, URLParams);
 
 			if (data.status === 'success') {
 				return {
@@ -64,7 +64,7 @@ module.exports = class SessionService {
 		};
 
 		try {
-			const { data } = ServerAction(ROOM_ENDPOINTS.CREATE, URLParams, options);
+			const { data } = await ServerAction(ROOM_ENDPOINTS.CREATE, URLParams, options);
 
 			if (data.status === 'success') {
 				return {
@@ -92,12 +92,11 @@ module.exports = class SessionService {
 		};
 
 		const URLParams = {
-			roomID: room._id,
-			spaceID: room.spaceID
+			roomID: room._id
 		};
 
 		try {
-			const { data } = ServerAction(ROOM_ENDPOINTS.UPDATE, URLParams, options);
+			const { data } = await ServerAction(ROOM_ENDPOINTS.UPDATE, URLParams, options);
 
 			if (data.status === 'success') {
 				return {
@@ -121,12 +120,11 @@ module.exports = class SessionService {
 
 	async delete(room) {
 		const URLParams = {
-			roomID: room._id,
-			spaceID: room.spaceID
+			roomID: room._id
 		};
 
 		try {
-			const { data } = ServerAction(ROOM_ENDPOINTS.DELETE, URLParams);
+			const { data } = await ServerAction(ROOM_ENDPOINTS.DELETE, URLParams);
 
 			if (data.status === 'success') {
 				return {
