@@ -9,6 +9,7 @@ import RoomForm from './views/Room/Form'
 import ShowRoom from './views/Room/Show'
 import ToolForm from './views/Tool/Form'
 import ShowTool from './views/Tool/Show'
+import ReservationForm from './views/Reservation/Form'
 
 const Routes = () => (
     <Router>
@@ -26,6 +27,8 @@ const Routes = () => (
 
             <Scene key='createTool' component={ToolForm} title='Crear Herramienta' />
             <Scene key='showTool' component={ShowTool} title />
+
+            <Scene key='createReservation' component={ReservationForm} title='Crear Reserva' />
         </Scene>
     </Router>
 )
