@@ -30,7 +30,8 @@ class Show extends Component {
     goToCreateReservation(){
         Actions.createReservation({
             elementData: this.props.roomData,
-            submitText: 'Crear Reserva'
+            submitText: 'Crear Reserva',
+            reservationType: 'room'
         })
     }
 

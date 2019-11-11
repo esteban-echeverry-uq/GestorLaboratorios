@@ -24,8 +24,20 @@ class ReservationForm extends Component {
         };
     }
 
-    goToSpacesIndex() {
-        Actions.spacesIndex();
+    goToShowElement() {
+        if(this.props.reservationType == 'room'){
+            Actions.showRoom({
+                roomData: this.props.elementData,
+                spaceData: this.props.spaceData,
+                title: this.props.elementData.name
+            })
+        }else{
+            Actions.showTool({
+                toolData: this.props.elementData,
+                spaceData: this.props.spaceData,
+                title: this.props.elementData.name
+            })
+        }
     }
 
     updateValue(text,field){
@@ -41,7 +53,7 @@ class ReservationForm extends Component {
             elementID: this.props.elementData._id
         }).then((response) => {
             if (response.status == 'success'){
-                Actions.spacesIndex();
+                this.goToShowElement();
             }else{
                 console.warn(response)
             }
@@ -52,7 +64,7 @@ class ReservationForm extends Component {
     }
 
     render() {
-        let {spaceData} = this.props;
+        console.warn(this.props)
         return(
             <View style={styles.container}>
                 <Dropdown
