@@ -26,9 +26,10 @@ export default class Routes extends Component {
 
 	componentDidMount() {
         this._isMounted = true;
-        sessionService.getCurrentUser().then(response => {
+
+        if (!this.state.currentUser) sessionService.getCurrentUser().then(response => {
             if (response.status === 'success' && this._isMounted) {
-                this.setState({ currentUser: response.currentUser });
+				this.setCurrentUser(response.currentUser);
             }
         });
     }
@@ -36,16 +37,12 @@ export default class Routes extends Component {
 	logout() {
 		sessionService.logout().then(response => {
 			if (response.status === 'success') {
-				//Actions.refresh('menuDrawer');
-				Actions.reset('login');
-				this.setState({ currentUser: undefined });
+				this.setCurrentUser(undefined);
 			}
 		});
 	}
 
 	setCurrentUser(currentUser) {
-		Actions.reset('spacesIndex');
-		//Actions.refresh('menuDrawer');
 		this.setState({ currentUser });
 	}
 

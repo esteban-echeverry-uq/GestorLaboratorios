@@ -4,8 +4,9 @@ import { Actions } from "react-native-router-flux";
 import Button from "./Button";
 
 export default class DrawerContent extends Component {
-	goTo(component) {
-		Actions.reset(component);
+	goTo(component, props) {
+		Actions[component](component, props || {});
+
 	}
 
 	renderLoggedOutButtons() {
@@ -17,9 +18,11 @@ export default class DrawerContent extends Component {
 	}
 
 	renderLoggedButtons() {
+		const { currentUser } = this.props;
+
 		return (
 			<>
-				<Button action={() => this.goTo('myReservations')} title='Mis Reservaciones' bgColor='green'/>
+				<Button action={() => this.goTo('myReservations', { currentUser })} title='Mis Reservaciones' bgColor='green'/>
 				<Button action={() => this.goTo('spacesIndex')} title='Facultades' bgColor='green'/>
 				<Button action={this.props.logout} title='Cerrar Sesión' bgColor='red'/>
 			</>
