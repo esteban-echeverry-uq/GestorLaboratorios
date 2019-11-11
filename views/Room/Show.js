@@ -35,6 +35,14 @@ class Show extends Component {
         })
     }
 
+    goToEditRoom = (spaceData) => {
+        Actions.editRoom({
+            spaceData,
+            roomData: this.props.roomData,
+            submitText: 'Editar Sala'
+        })
+    }
+
     setReservationColor(availability){
         switch(availability){
             case 'Disponible':
@@ -73,6 +81,10 @@ class Show extends Component {
         return (
             <SafeAreaView>
                 <ScrollView>
+                    <View style={[styles.horizontal, styles.container]}>
+                        <Button title="Editar Sala" action={() => this.goToEditRoom(this.props.spaceData)} bgColor='blue' />
+                        <Button title="Eliminar Sala" action={this.deleteSpace} bgColor='red'/>
+                    </View>
                     {this.renderReservations()}
                     <Button title='Crear Reserva' action={() => this.goToCreateReservation()} bgColor='green'/>
                 </ScrollView>
@@ -82,6 +94,11 @@ class Show extends Component {
 }
 
 const styles = StyleSheet.create({
+    container:{
+        borderBottomColor: 'gray',
+        borderBottomWidth: 1,
+        marginBottom: 10
+    },
     horizontal: {
         flexDirection:'row',
         flexWrap:'wrap',

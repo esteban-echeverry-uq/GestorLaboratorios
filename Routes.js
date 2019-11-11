@@ -51,9 +51,11 @@ export default class Routes extends Component {
 
                     <Scene key='createRoom' component={RoomForm} title='Crear Sala' />
                     <Scene key='showRoom' component={ShowRoom} title />
+                    <Scene key='editRoom' component={RoomForm} title='Editar Sala' />
 
                     <Scene key='createTool' component={ToolForm} title='Crear Herramienta' />
                     <Scene key='showTool' component={ShowTool} title />
+                    <Scene key='editTool' component={ToolForm} title='Editar Herramienta' />
 
                     <Scene key='createReservation' component={ReservationForm} title='Crear Reserva' currentUser={currentUser}/>
 

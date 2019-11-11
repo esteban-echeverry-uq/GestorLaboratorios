@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, SafeAreaView, ScrollView} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Button from '../../components/Button';
 
@@ -26,6 +26,14 @@ class Show extends Component {
                 console.warn(response.status);
             }
         });
+    }
+
+    goToEditTool = (spaceData) => {
+        Actions.editTool({
+            spaceData,
+            toolData: this.props.toolData,
+            submitText: 'Editar Herramienta'
+        })
     }
 
     setReservationColor(availability){
@@ -72,15 +80,26 @@ class Show extends Component {
 
     render(){
         return (
-            <View>
-                {this.renderReservations()}
-                <Button title='Crear Reserva' action={() => this.goToCreateReservation()} bgColor='green'/>
-            </View>
+            <SafeAreaView>
+                <ScrollView>
+                    <View style={[styles.horizontal, styles.container]}>
+                            <Button title="Editar Herramienta" action={() => this.goToEditTool(this.props.spaceData)} bgColor='blue' />
+                            <Button title="Eliminar Herramienta" action={this.deleteSpace} bgColor='red'/>
+                        </View>
+                    {this.renderReservations()}
+                    <Button title='Crear Reserva' action={() => this.goToCreateReservation()} bgColor='green'/>
+                </ScrollView>
+            </SafeAreaView>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    container:{
+        borderBottomColor: 'gray',
+        borderBottomWidth: 1,
+        marginBottom: 10
+    },
     horizontal: {
         flexDirection:'row',
         flexWrap:'wrap',
