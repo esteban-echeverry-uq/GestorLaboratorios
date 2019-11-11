@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Router, Scene, Drawer, Actions} from 'react-native-router-flux';
+import {Router, Scene, Drawer} from 'react-native-router-flux';
 import Login from './views/Auth/Login';
 import SignUp from './views/Auth/SignUp';
 import Spaces from './views/Space/Index';
