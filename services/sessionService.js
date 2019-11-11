@@ -83,4 +83,30 @@ module.exports = class SessionService {
 			};
 		}
 	}
+
+	async logout() {
+		try {
+			const { data } = await ServerAction(USER_ENDPOINTS.LOGOUT, {});
+
+			if (data.status === 'success') {
+				await StoreAction.delete('currentUser');
+
+				return {
+					status: 'success'
+				};
+			}
+			else {
+				return {
+					status: 'error',
+					message: data.message
+				};
+			}
+		} catch (e) {
+
+			return {
+				status: 'error',
+				message: e.message
+			};
+		}
+	}
 };

@@ -1,17 +1,18 @@
-import React, {Component} from 'react'
-import { Router, Scene, Drawer } from 'react-native-router-flux'
-import {Text} from 'react-native'
-import Login from './views/Auth/Login'
-import SignUp from './views/Auth/SignUp'
-import Spaces from './views/Space/Index'
-import ShowSpace from './views/Space/Show'
-import SpaceForm from './views/Space/Form'
-import RoomForm from './views/Room/Form'
-import ShowRoom from './views/Room/Show'
-import ToolForm from './views/Tool/Form'
-import ShowTool from './views/Tool/Show'
-import ReservationForm from './views/Reservation/Form'
-import DrawerView from './components/Drawer'
+import React, {Component} from 'react';
+import { Router, Scene, Drawer } from 'react-native-router-flux';
+import Login from './views/Auth/Login';
+import SignUp from './views/Auth/SignUp';
+import Spaces from './views/Space/Index';
+import ShowSpace from './views/Space/Show';
+import SpaceForm from './views/Space/Form';
+import RoomForm from './views/Room/Form';
+import ShowRoom from './views/Room/Show';
+import ToolForm from './views/Tool/Form';
+import ShowTool from './views/Tool/Show';
+import ReservationForm from './views/Reservation/Form';
+import DrawerContent from "./components/DrawerContent";
+import MenuButton from "./components/MenuButton";
+
 const SessionService = require('./services/sessionService');
 const sessionService = new SessionService();
 
@@ -39,8 +40,11 @@ export default class Routes extends Component {
         const { currentUser } = this.state;
 
         return (this._isMounted &&
-            <Router >
-                <Scene key='root'>
+            <Router>
+                <Scene
+					key='root'
+					renderRightButton={<MenuButton />}
+				>
                     <Scene key='login' component={Login} title='Iniciar Sesión' initial={!currentUser}/>
                     <Scene key='signUp' component={SignUp} title='Crear Cuenta' />
 
@@ -57,9 +61,11 @@ export default class Routes extends Component {
 
                     <Scene key='createReservation' component={ReservationForm} title='Crear Reserva' currentUser={currentUser}/>
 
-                    <Scene drawer={true}
-                        key="drawerMenu"
-                        component={DrawerView}
+                    <Drawer
+                        key='drawer'
+                        component={DrawerContent}
+                        hideDrawerButton={!currentUser}
+                        drawerPosition='right'
                     />
                 </Scene>
             </Router>
