@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { 
-    Button, 
-    TextInput, 
-    View, 
-    StyleSheet, 
-    Alert, 
-    TouchableOpacity, 
+    Button,
+    TextInput,
+    View,
+    StyleSheet,
+    TouchableOpacity,
     Text,
     Picker
 } from 'react-native';

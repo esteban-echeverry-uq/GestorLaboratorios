@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import { 
     Button, 
-    TextInput, 
     View, 
     StyleSheet
 } from 'react-native';
 import { Dropdown } from 'react-native-material-dropdown';
 import dropDownData from './dropDown';
-import axios from 'axios';
 import { Actions } from "react-native-router-flux";
-const endpoints = require('../../configs/constants/endpoints');
-const endpointGenerator = require('../../helpers/endpointURLGenerator');
 const ReservationService = require('../../services/reservationService');
 const reservationService = new ReservationService();
 
