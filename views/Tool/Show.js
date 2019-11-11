@@ -16,7 +16,6 @@ class Show extends Component {
     }
 
     componentDidMount() {
-        console.warn(this.props.toolData);
         reservationService.getAllByElement(this.props.toolData._id).then(response => {
             if (response.status === 'success') {
                 this.setState({

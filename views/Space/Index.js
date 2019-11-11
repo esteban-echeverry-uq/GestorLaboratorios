@@ -49,10 +49,9 @@ class Index extends Component {
         let {spaces} = this.state;
         return(
             spaces.length > 0 &&
-            <View style={styles.container}>
+            <View>
                 <View style={styles.horizontal}>
-                    <Button title="Crear Espacio" action={this.goToCreateSpace}/>
-                    <Button title="Abrir Drawer" action={this.openDrawer}/>
+                    <Button title="Crear Espacio" action={this.goToCreateSpace} bgColor='blue'/>
                 </View>
                 <FlatList
                     data={spaces}
@@ -65,12 +64,11 @@ class Index extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        marginTop: 10,
-    },
     horizontal: {
         flexDirection:'row',
         flexWrap:'wrap',
+        borderBottomColor: 'gray',
+        borderBottomWidth: 1
     }
 });
 

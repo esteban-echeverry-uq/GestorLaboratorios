@@ -18,8 +18,8 @@ const styles = StyleSheet.create({
         borderWidth: 4,
         borderRadius: 4,
         padding: 10,
-        marginVertical: 8,
-        marginHorizontal: 16,
+        marginVertical: 10,
+        marginHorizontal: 10,
     },
     title: {
         color: 'white',

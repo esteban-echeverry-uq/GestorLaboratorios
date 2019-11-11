@@ -67,12 +67,12 @@ class Show extends Component {
         return (
             <Fragment>
                 <View style={styles.horizontal}>
-                    <Button title="Editar Espacio" action={() => this.goToEditSpace(spaceData)}/>
-                    <Button title="Eliminar Espacio" action={this.deleteSpace}/>
+                    <Button title="Editar Espacio" action={() => this.goToEditSpace(spaceData)} bgColor='blue' />
+                    <Button title="Eliminar Espacio" action={this.deleteSpace} bgColor='red'/>
                 </View>
                 <View style={styles.horizontal}>
-                    <Button title="Crear Sala" action={() => this.goToCreateRoom(spaceData)}/>
-                    <Button title="Crear Herramienta" action={() => this.goToCreateTool(spaceData)}/>
+                    <Button title="Crear Sala" action={() => this.goToCreateRoom(spaceData)} bgColor='blue' />
+                    <Button title="Crear Herramienta" action={() => this.goToCreateTool(spaceData)} bgColor='blue' />
                 </View>
                 <TabView
                     navigationState={this.state}
@@ -98,6 +98,8 @@ const styles = StyleSheet.create({
     horizontal: {
         flexDirection:'row',
         flexWrap:'wrap',
+        borderBottomColor: 'gray',
+        borderBottomWidth: 1
     }
 });
 

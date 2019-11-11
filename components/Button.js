@@ -1,10 +1,22 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-const Button = ({title, action}) => {
-
+const Button = ({title, action, bgColor}) => {
+    let getColor = (color) => {
+        switch(color){
+            case 'blue':
+                return styles.blueBtn
+            case 'red':
+                return styles.redBtn
+            case 'green':
+                return styles.greenBtn
+        }
+    }
+    
     return (
-        <TouchableOpacity style={styles.item} onPress={() => action(title)}>
+        <TouchableOpacity 
+        style={[styles.item, getColor(bgColor)]}
+        onPress={() => action(title)}>
             <Text style={styles.title}>{title}</Text>
         </TouchableOpacity>
     )
@@ -13,16 +25,26 @@ const Button = ({title, action}) => {
 const styles = StyleSheet.create({ 
     item: {
         display: "flex",
-        backgroundColor: '#005499',
         borderStyle: 'solid',
-        borderColor: '#013e70',
         borderWidth: 4,
         borderRadius: 4,
         padding: 10,
-        marginVertical: 8,
-        marginHorizontal: 8,
+        marginVertical: 10,
+        marginHorizontal: 10,
+    },
+    blueBtn: {
+        borderColor: '#013e70',
+        backgroundColor: '#005499'
+    },
+    redBtn: {
+        backgroundColor: '#cc0000',
+        borderColor: '#660000'
+    },
+    greenBtn: {
+
     },
     title: {
+        textAlign: 'center',
         color: 'white',
         fontSize: 14,
     },
