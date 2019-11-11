@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, View, StyleSheet } from 'react-native';
+import { FlatList, View, StyleSheet, ActivityIndicator } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import ListItem from '../../components/ListItem';
 import Button from '../../components/Button';
@@ -54,7 +54,11 @@ class Index extends Component {
                     renderItem={({ item }) => <ListItem item={item} action={this.goToShowSpace} />}
                     keyExtractor={item => item._id}
                 />
-            </View> || <Button title="Crear Espacio" action={this.goToCreateSpace}/>
+            </View> || 
+            <View style={[styles.container, styles.center]}>
+                <ActivityIndicator size="large" color="#176623" />
+            </View>
+ 
         );
     } 
 }
@@ -65,6 +69,15 @@ const styles = StyleSheet.create({
         flexWrap:'wrap',
         borderBottomColor: 'gray',
         borderBottomWidth: 1
+    },
+    container: {
+        flex: 1,
+        justifyContent: 'center'
+    },
+    center: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        padding: 10
     }
 });
 
