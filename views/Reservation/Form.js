@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import { 
     Button, 
-    TextInput, 
     View, 
     StyleSheet
 } from 'react-native';
 import { Dropdown } from 'react-native-material-dropdown';
 import dropDownData from './dropDown';
-import axios from 'axios';
 import { Actions } from "react-native-router-flux";
-const endpoints = require('../../configs/constants/endpoints');
-const endpointGenerator = require('../../helpers/endpointURLGenerator');
 const ReservationService = require('../../services/reservationService');
 const reservationService = new ReservationService();
 
@@ -24,8 +20,20 @@ class ReservationForm extends Component {
         };
     }
 
-    goToSpacesIndex() {
-        Actions.spacesIndex();
+    goToShowElement() {
+        if(this.props.reservationType == 'room'){
+            Actions.showRoom({
+                roomData: this.props.elementData,
+                spaceData: this.props.spaceData,
+                title: this.props.elementData.name
+            })
+        }else{
+            Actions.showTool({
+                toolData: this.props.elementData,
+                spaceData: this.props.spaceData,
+                title: this.props.elementData.name
+            })
+        }
     }
 
     updateValue(text,field){
@@ -41,7 +49,7 @@ class ReservationForm extends Component {
             elementID: this.props.elementData._id
         }).then((response) => {
             if (response.status == 'success'){
-                Actions.spacesIndex();
+                this.goToShowElement();
             }else{
                 console.warn(response.message);
             }
@@ -52,7 +60,7 @@ class ReservationForm extends Component {
     }
 
     render() {
-        let {spaceData} = this.props;
+        console.warn(this.props)
         return(
             <View style={styles.container}>
                 <Dropdown

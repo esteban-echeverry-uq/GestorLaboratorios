@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Dimensions, View, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { TabView } from 'react-native-tab-view';
+import { TabView, TabBar } from 'react-native-tab-view';
 import axios from 'axios';
 import Button from '../../components/Button';
 import Rooms from '../Room/Index'
@@ -86,6 +86,13 @@ class Show extends Component {
                                 return null;
                         }
                     }}
+                    renderTabBar={props =>
+                        <TabBar
+                          {...props}
+                          indicatorStyle={{ backgroundColor: '#219132', height:5 }}
+                          style={{ backgroundColor: '#176623' }}
+                        />
+                      }
                     onIndexChange={index => this.setState({ index })}
                     initialLayout={{ width: Dimensions.get('window').width }}
                 />
@@ -99,7 +106,8 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         flexWrap:'wrap',
         borderBottomColor: 'gray',
-        borderBottomWidth: 1
+        borderBottomWidth: 1,
+        marginBottom: 10
     }
 });
 
