@@ -4,13 +4,17 @@ import {Text, View} from "react-native";
 const ReservationService = require('../../services/reservationService');
 const reservationService = new ReservationService();
 
-export default class MyReservations extends Component {
-	state = {
-		reservations: []
-	};
+class MyReservations extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			reservations: []
+		};
+	}
 
 	componentDidMount() {
-		const { currentUser } = this.state;
+		const { currentUser } = this.props;
 
 		if (currentUser) reservationService.getAllByUser(this.props.currentUser._id).then(response => {
 			if (response.status === 'success') {
@@ -34,3 +38,5 @@ export default class MyReservations extends Component {
 		);
 	}
 }
+
+export default MyReservations;

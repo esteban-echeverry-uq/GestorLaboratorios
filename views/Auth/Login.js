@@ -25,6 +25,10 @@ class Login extends Component {
         };
     }
 
+    componentDidMount() {
+        Actions.reset('login');
+    }
+
     login() {
         sessionService.login(this.state.newUser).then(response => {
             if (response.status === 'success') {
