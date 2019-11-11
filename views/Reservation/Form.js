@@ -43,7 +43,7 @@ class ReservationForm extends Component {
             if (response.status == 'success'){
                 Actions.spacesIndex();
             }else{
-                console.warn(response)
+                console.warn(response.message);
             }
         })
         .catch(function (error) {

@@ -1,23 +1,41 @@
 import React, {Component} from "react";
-import {Button, Text, View} from "react-native";
-import {Actions} from "react-native-router-flux";
-
-const SessionService = require('../services/sessionService');
-const sessionService = new SessionService();
+import { View } from "react-native";
+import { Actions } from "react-native-router-flux";
+import Button from "./Button";
 
 export default class DrawerContent extends Component {
-	logout() {
-		sessionService.logout().then(response => {
-			if (response.status === 'success') {
-				Actions.login();
-			}
-		});
+	goTo(component) {
+		Actions.reset(component);
+	}
+
+	renderNotLoggedButtons() {
+		return (
+			<>
+				<Button action={() =>this.goTo('login')} title='Iniciar Sesión' />
+			</>
+		);
+	}
+
+	renderLoggedButtons() {
+		return (
+			<>
+				<Button action={this.props.logout} title='Cerrar Sesión' />
+				<Button action={() => this.goTo('myReservations')} title='Mis Reservaciones' />
+				<Button action={() => this.goTo('spacesIndex')} title='Facultades' />
+			</>
+		);
 	}
 
 	render() {
+		const { currentUser } = this.props;
+
 		return (
 			<View>
-				<Button onPress={this.logout} title='Cerrar Sesión' />
+				{
+					currentUser ?
+						this.renderLoggedButtons() :
+						this.renderNotLoggedButtons()
+				}
 			</View>
 		);
 	}

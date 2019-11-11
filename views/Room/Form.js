@@ -44,9 +44,9 @@ class RoomForm extends Component {
             data:  {...this.state, spaceID: spaceData._id}
         }).then((response) => {
             if(response.data.status === 'success'){
-                Actions.showSpace({spaceData, title: spaceData.name})
+                Actions.showSpace({spaceData, title: spaceData.name});
             }else{
-                console.warn(response)
+                console.warn(response);
             }
         })
         .catch(function (error) {

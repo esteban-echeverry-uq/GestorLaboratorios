@@ -22,7 +22,7 @@ class Show extends Component {
                 });
             }
             else {
-                console.warn(response.status);
+                console.warn(response.message);
             }
         });
     }

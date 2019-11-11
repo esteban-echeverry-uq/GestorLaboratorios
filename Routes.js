@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Router, Scene, Drawer } from 'react-native-router-flux';
+import {Router, Scene, Drawer, Actions} from 'react-native-router-flux';
 import Login from './views/Auth/Login';
 import SignUp from './views/Auth/SignUp';
 import Spaces from './views/Space/Index';
@@ -23,7 +23,7 @@ export default class Routes extends Component {
         currentUser: undefined
     };
 
-    componentDidMount() {
+	componentDidMount() {
         this._isMounted = true;
         sessionService.getCurrentUser().then(response => {
             if (response.status === 'success' && this._isMounted) {
@@ -31,6 +31,21 @@ export default class Routes extends Component {
             }
         });
     }
+
+	logout() {
+		sessionService.logout().then(response => {
+			if (response.status === 'success') {
+				this.setState({ currentUser: undefined });
+				//Actions.refresh('drawer');
+				//Actions.reset('login');
+			}
+		});
+	}
+
+	setCurrentUser(currentUser) {
+		//Actions.reset('spacesIndex');
+		this.setState({ currentUser });
+	}
 
     componentWillUnmount() {
         this._isMounted = false;
@@ -45,8 +60,26 @@ export default class Routes extends Component {
 					key='root'
 					renderRightButton={<MenuButton />}
 				>
-                    <Scene key='login' component={Login} title='Iniciar Sesión' initial={!currentUser}/>
-                    <Scene key='signUp' component={SignUp} title='Crear Cuenta' />
+                    <Scene
+						key='login'
+						component={Login}
+						title='Iniciar Sesión'
+						initial={!currentUser}
+						setCurrentUser={(currentUser) => this.setCurrentUser(currentUser)}
+					/>
+                    <Scene
+						key='signUp'
+						component={SignUp}
+						title='Crear Cuenta'
+						setCurrentUser={(currentUser) => this.setCurrentUser(currentUser)}
+					/>
+					<Scene
+						key='menuDrawer'
+						component={DrawerContent}
+						currentUser={currentUser}
+						logout={() => this.logout()}
+						drawerPosition='right'
+					/>
 
                     <Scene key='spacesIndex' component={Spaces} title='Facultades' initial={currentUser} currentUser={currentUser}/>
                     <Scene key='showSpace' component={ShowSpace} title />
@@ -60,13 +93,7 @@ export default class Routes extends Component {
                     <Scene key='showTool' component={ShowTool} title />
 
                     <Scene key='createReservation' component={ReservationForm} title='Crear Reserva' currentUser={currentUser}/>
-
-                    <Drawer
-                        key='drawer'
-                        component={DrawerContent}
-                        hideDrawerButton={!currentUser}
-                        drawerPosition='right'
-                    />
+					<Scene key='myReservations' component={ReservationForm} title='Crear Reserva' currentUser={currentUser}/>
                 </Scene>
             </Router>
         )

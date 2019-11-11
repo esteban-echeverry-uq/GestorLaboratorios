@@ -39,7 +39,7 @@ class SignUp extends Component {
 
         sessionService.register(newUser).then(response => {
             if (response.status === 'success') {
-                Actions.spacesIndex();
+                this.props.setCurrentUser(response.currentUser);
             }
             else {
                 this.setState({ error: response.message });
