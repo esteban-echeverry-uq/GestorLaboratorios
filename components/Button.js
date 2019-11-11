@@ -41,7 +41,8 @@ const styles = StyleSheet.create({
         borderColor: '#660000'
     },
     greenBtn: {
-
+        backgroundColor: '#176623',
+        borderColor: '#0e3e15'
     },
     title: {
         textAlign: 'center',

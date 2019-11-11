@@ -34,11 +34,22 @@ class Show extends Component {
         })
     }
 
+    setReservationColor(availability){
+        switch(availability){
+            case 'Disponible':
+                return styles.available
+            case 'Por Confirmar':
+                return styles.pending
+            case 'Reservado':
+                return styles.reserved
+        }
+    }
+
     scheduleItem(i, reservationStatus){
         return (
             <View style={styles.horizontal} key={i}>
                 <Text style={styles.box}>{`${i}:00`}</Text>
-                <Text style={styles.box}>{reservationStatus}</Text>
+                <Text style={[styles.statusBox, this.setReservationColor(reservationStatus)]}>{reservationStatus}</Text>
             </View>
         )
     }
@@ -60,10 +71,10 @@ class Show extends Component {
     render(){
         return (
             <SafeAreaView>
-            <ScrollView>
-                {this.renderReservations()}
-                <Button title='Crear Reserva' action={() => this.goToCreateReservation()} />
-            </ScrollView>
+                <ScrollView>
+                    {this.renderReservations()}
+                    <Button title='Crear Reserva' action={() => this.goToCreateReservation()} bgColor='green'/>
+                </ScrollView>
             </SafeAreaView>
         );
     }
@@ -77,10 +88,30 @@ const styles = StyleSheet.create({
     box:{
         borderColor: 'black',
         borderWidth: 1,
+        backgroundColor: 'white',
         display: 'flex',
         flex: 0.5,
         padding: 10,
         textAlign: 'center'
+    },
+    statusBox:{
+        borderColor: 'black',
+        borderWidth: 1,
+        backgroundColor: 'white',
+        display: 'flex',
+        flex: 0.5,
+        padding: 10,
+        textAlign: 'center',
+        color: 'white'
+    },
+    available:{
+        backgroundColor: '#176623'
+    },
+    pending: {
+        backgroundColor: '#e6b800'
+    },
+    reserved: {
+        backgroundColor: '#cc0000'
     }
 });
 
