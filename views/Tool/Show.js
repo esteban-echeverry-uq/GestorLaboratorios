@@ -59,7 +59,7 @@ class Show extends Component {
     renderReservations(){
         let reservations=[];
         for(let i=7; i <= 22; i++){
-            const existingReservation = this.state.reservations.filter( (reservation) => reservation.startTime === i);
+            const existingReservation = this.state.reservations.filter( (reservation) => reservation.startTime <= i && i <= reservation.endTime);
             if(existingReservation.length){
                 let reservationStatus = existingReservation[0].status === 'pending' ? 'Por Confirmar' : 'Reservado'
                 reservations.push(this.scheduleItem(i,reservationStatus))

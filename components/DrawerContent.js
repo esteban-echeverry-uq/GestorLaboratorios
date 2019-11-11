@@ -8,7 +8,7 @@ export default class DrawerContent extends Component {
 		Actions.reset(component);
 	}
 
-	renderNotLoggedButtons() {
+	renderLoggedOutButtons() {
 		return (
 			<>
 				<Button action={() =>this.goTo('login')} title='Iniciar Sesión' />
@@ -19,9 +19,9 @@ export default class DrawerContent extends Component {
 	renderLoggedButtons() {
 		return (
 			<>
-				<Button action={this.props.logout} title='Cerrar Sesión' />
-				<Button action={() => this.goTo('myReservations')} title='Mis Reservaciones' />
-				<Button action={() => this.goTo('spacesIndex')} title='Facultades' />
+				<Button action={() => this.goTo('myReservations')} title='Mis Reservaciones' bgColor='green'/>
+				<Button action={() => this.goTo('spacesIndex')} title='Facultades' bgColor='green'/>
+				<Button action={this.props.logout} title='Cerrar Sesión' bgColor='red'/>
 			</>
 		);
 	}
@@ -34,7 +34,7 @@ export default class DrawerContent extends Component {
 				{
 					currentUser ?
 						this.renderLoggedButtons() :
-						this.renderNotLoggedButtons()
+						this.renderLoggedOutButtons()
 				}
 			</View>
 		);

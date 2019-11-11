@@ -13,7 +13,7 @@ import ReservationForm from './views/Reservation/Form';
 import DrawerContent from "./components/DrawerContent";
 import MenuButton from "./components/MenuButton";
 import MyReservations from "./views/Reservation/MyReservations";
-
+console.disableYellowBox = false;
 const SessionService = require('./services/sessionService');
 const sessionService = new SessionService();
 

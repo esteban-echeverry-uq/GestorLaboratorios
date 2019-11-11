@@ -60,7 +60,6 @@ class ReservationForm extends Component {
     }
 
     render() {
-        console.warn(this.props)
         return(
             <View style={styles.container}>
                 <Dropdown
