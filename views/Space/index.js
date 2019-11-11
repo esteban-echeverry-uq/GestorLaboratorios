@@ -41,6 +41,10 @@ class Index extends Component {
         Actions.createSpace({submitText: "Crear Espacio"})
     }
 
+    openDrawer= ()=>{
+        Actions.drawerMenu()
+    }
+
     render(){
         let {spaces} = this.state;
         return(
@@ -48,6 +52,7 @@ class Index extends Component {
             <View style={styles.container}>
                 <View style={styles.horizontal}>
                     <Button title="Crear Espacio" action={this.goToCreateSpace}/>
+                    <Button title="Abrir Drawer" action={this.openDrawer}/>
                 </View>
                 <FlatList
                     data={spaces}

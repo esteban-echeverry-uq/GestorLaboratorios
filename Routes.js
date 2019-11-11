@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-import { Router, Scene } from 'react-native-router-flux'
+import { Router, Scene, Drawer } from 'react-native-router-flux'
+import {Text} from 'react-native'
 import Login from './views/Auth/Login'
 import SignUp from './views/Auth/SignUp'
 import Spaces from './views/Space/Index'
@@ -10,6 +11,7 @@ import ShowRoom from './views/Room/Show'
 import ToolForm from './views/Tool/Form'
 import ShowTool from './views/Tool/Show'
 import ReservationForm from './views/Reservation/Form'
+import DrawerView from './components/Drawer'
 const SessionService = require('./services/sessionService');
 const sessionService = new SessionService();
 
@@ -35,10 +37,9 @@ export default class Routes extends Component {
 
     render() {
         const { currentUser } = this.state;
-        console.warn(currentUser)
 
         return (this._isMounted &&
-            <Router>
+            <Router >
                 <Scene key='root'>
                     <Scene key='login' component={Login} title='Iniciar Sesión' initial={!currentUser}/>
                     <Scene key='signUp' component={SignUp} title='Crear Cuenta' />
@@ -55,6 +56,11 @@ export default class Routes extends Component {
                     <Scene key='showTool' component={ShowTool} title />
 
                     <Scene key='createReservation' component={ReservationForm} title='Crear Reserva' currentUser={currentUser}/>
+
+                    <Scene drawer={true}
+                        key="drawerMenu"
+                        component={DrawerView}
+                    />
                 </Scene>
             </Router>
         )
