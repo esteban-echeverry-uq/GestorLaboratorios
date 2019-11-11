@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import {View, StyleSheet, Text, SafeAreaView, ScrollView} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Button from '../../components/Button';
-
-
 const ReservationService = require('../../services/reservationService');
 const reservationService = new ReservationService();
+
+const ToolService = require('../../services/toolService');
+const toolService = new ToolService();
 
 class Show extends Component {
     constructor(props) {
@@ -35,6 +36,20 @@ class Show extends Component {
             submitText: 'Editar Herramienta',
             action: 'edit'
         })
+    }
+
+    deleteTool= () =>{
+        let {toolData, spaceData} = this.props;
+        toolService.delete(toolData)
+        .then((response) => {
+            console.warn(response)
+            if(response.status === 'success'){
+                Actions.showSpace({spaceData, title: spaceData.name})
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
     }
 
     setReservationColor(availability){
@@ -85,7 +100,7 @@ class Show extends Component {
                 <ScrollView>
                     <View style={[styles.horizontal, styles.container]}>
                             <Button title="Editar Herramienta" action={() => this.goToEditTool(this.props.spaceData)} bgColor='blue' />
-                            <Button title="Eliminar Herramienta" action={this.deleteSpace} bgColor='red'/>
+                            <Button title="Eliminar Herramienta" action={this.deleteTool} bgColor='red'/>
                         </View>
                     {this.renderReservations()}
                     <Button title='Crear Reserva' action={() => this.goToCreateReservation()} bgColor='green'/>
