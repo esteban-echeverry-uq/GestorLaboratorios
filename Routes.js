@@ -12,6 +12,7 @@ import ShowTool from './views/Tool/Show';
 import ReservationForm from './views/Reservation/Form';
 import DrawerContent from "./components/DrawerContent";
 import MenuButton from "./components/MenuButton";
+import MyReservations from "./views/Reservation/MyReservations";
 
 const SessionService = require('./services/sessionService');
 const sessionService = new SessionService();
@@ -35,15 +36,16 @@ export default class Routes extends Component {
 	logout() {
 		sessionService.logout().then(response => {
 			if (response.status === 'success') {
+				//Actions.refresh('menuDrawer');
+				Actions.reset('login');
 				this.setState({ currentUser: undefined });
-				//Actions.refresh('drawer');
-				//Actions.reset('login');
 			}
 		});
 	}
 
 	setCurrentUser(currentUser) {
-		//Actions.reset('spacesIndex');
+		Actions.reset('spacesIndex');
+		//Actions.refresh('menuDrawer');
 		this.setState({ currentUser });
 	}
 
@@ -60,6 +62,13 @@ export default class Routes extends Component {
 					key='root'
 					renderRightButton={<MenuButton />}
 				>
+					<Drawer
+						key='menuDrawer'
+						component={DrawerContent}
+						currentUser={currentUser}
+						logout={() => this.logout()}
+						drawerPosition='right'
+					/>
                     <Scene
 						key='login'
 						component={Login}
@@ -72,13 +81,6 @@ export default class Routes extends Component {
 						component={SignUp}
 						title='Crear Cuenta'
 						setCurrentUser={(currentUser) => this.setCurrentUser(currentUser)}
-					/>
-					<Scene
-						key='menuDrawer'
-						component={DrawerContent}
-						currentUser={currentUser}
-						logout={() => this.logout()}
-						drawerPosition='right'
 					/>
 
                     <Scene key='spacesIndex' component={Spaces} title='Facultades' initial={currentUser} currentUser={currentUser}/>
@@ -93,7 +95,7 @@ export default class Routes extends Component {
                     <Scene key='showTool' component={ShowTool} title />
 
                     <Scene key='createReservation' component={ReservationForm} title='Crear Reserva' currentUser={currentUser}/>
-					<Scene key='myReservations' component={ReservationForm} title='Crear Reserva' currentUser={currentUser}/>
+					<Scene key='myReservations' component={MyReservations} title='Mis Reservas' currentUser={currentUser}/>
                 </Scene>
             </Router>
         )

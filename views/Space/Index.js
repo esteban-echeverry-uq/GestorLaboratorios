@@ -35,15 +35,11 @@ class Index extends Component {
 
     goToShowSpace = (spaceData) => {
         Actions.showSpace({spaceData, title: spaceData.name})
-    }
+    };
 
     goToCreateSpace = () => {
         Actions.createSpace({submitText: "Crear Espacio"})
-    }
-
-    openDrawer= ()=>{
-        Actions.drawerMenu()
-    }
+    };
 
     render(){
         let {spaces} = this.state;

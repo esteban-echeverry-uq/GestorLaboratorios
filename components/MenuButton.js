@@ -4,7 +4,7 @@ import {Actions} from "react-native-router-flux";
 
 export default class MenuButton extends Component {
 	openDrawer() {
-		Actions.drawer();
+		Actions.menuDrawer();
 	}
 
 	render() {
