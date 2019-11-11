@@ -30,10 +30,10 @@ class RoomForm extends Component {
 
     submit(){
         let ENDPOINT, url;
-        let {spaceData} = this.props;
+        let {spaceData, roomData} = this.props;
         if (this.props.action === 'edit'){
             ENDPOINT = endpoints.ROOM.UPDATE;
-            url = endpointGenerator(ENDPOINT.PATH, {spaceID: spaceData._id});
+            url = endpointGenerator(ENDPOINT.PATH, {roomID: roomData._id});
         } else{
             ENDPOINT = endpoints.ROOM.CREATE;
             url = endpointGenerator(ENDPOINT.PATH, {spaceID: spaceData._id});

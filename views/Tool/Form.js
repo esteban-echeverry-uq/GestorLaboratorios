@@ -30,10 +30,10 @@ class ToolForm extends Component {
 
     submit(){
         let ENDPOINT, url;
-        let {spaceData} = this.props;
+        let {spaceData, toolData} = this.props;
         if (this.props.action === 'edit'){
             ENDPOINT = endpoints.TOOL.UPDATE;
-            url = endpointGenerator(ENDPOINT.PATH, {spaceID: spaceData._id});
+            url = endpointGenerator(ENDPOINT.PATH, {toolID: toolData._id});
         } else{
             ENDPOINT = endpoints.TOOL.CREATE;
             url = endpointGenerator(ENDPOINT.PATH, {spaceID: spaceData._id});

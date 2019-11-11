@@ -39,7 +39,8 @@ class Show extends Component {
         Actions.editRoom({
             spaceData,
             roomData: this.props.roomData,
-            submitText: 'Editar Sala'
+            submitText: 'Editar Sala',
+            action: 'edit'
         })
     }
 

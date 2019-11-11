@@ -32,7 +32,8 @@ class Show extends Component {
         Actions.editTool({
             spaceData,
             toolData: this.props.toolData,
-            submitText: 'Editar Herramienta'
+            submitText: 'Editar Herramienta',
+            action: 'edit'
         })
     }
 
