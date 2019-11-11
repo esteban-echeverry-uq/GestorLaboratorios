@@ -1,17 +1,18 @@
-import React, {Component} from 'react'
-import { Router, Scene, Drawer } from 'react-native-router-flux'
-import {Text} from 'react-native'
-import Login from './views/Auth/Login'
-import SignUp from './views/Auth/SignUp'
-import Spaces from './views/Space/Index'
-import ShowSpace from './views/Space/Show'
-import SpaceForm from './views/Space/Form'
-import RoomForm from './views/Room/Form'
-import ShowRoom from './views/Room/Show'
-import ToolForm from './views/Tool/Form'
-import ShowTool from './views/Tool/Show'
-import ReservationForm from './views/Reservation/Form'
-import DrawerView from './components/Drawer'
+import React, {Component} from 'react';
+import {Router, Scene, Drawer, Actions} from 'react-native-router-flux';
+import Login from './views/Auth/Login';
+import SignUp from './views/Auth/SignUp';
+import Spaces from './views/Space/Index';
+import ShowSpace from './views/Space/Show';
+import SpaceForm from './views/Space/Form';
+import RoomForm from './views/Room/Form';
+import ShowRoom from './views/Room/Show';
+import ToolForm from './views/Tool/Form';
+import ShowTool from './views/Tool/Show';
+import ReservationForm from './views/Reservation/Form';
+import DrawerContent from "./components/DrawerContent";
+import MenuButton from "./components/MenuButton";
+
 const SessionService = require('./services/sessionService');
 const sessionService = new SessionService();
 
@@ -22,7 +23,7 @@ export default class Routes extends Component {
         currentUser: undefined
     };
 
-    componentDidMount() {
+	componentDidMount() {
         this._isMounted = true;
         sessionService.getCurrentUser().then(response => {
             if (response.status === 'success' && this._isMounted) {
@@ -30,6 +31,21 @@ export default class Routes extends Component {
             }
         });
     }
+
+	logout() {
+		sessionService.logout().then(response => {
+			if (response.status === 'success') {
+				this.setState({ currentUser: undefined });
+				//Actions.refresh('drawer');
+				//Actions.reset('login');
+			}
+		});
+	}
+
+	setCurrentUser(currentUser) {
+		//Actions.reset('spacesIndex');
+		this.setState({ currentUser });
+	}
 
     componentWillUnmount() {
         this._isMounted = false;
@@ -39,10 +55,31 @@ export default class Routes extends Component {
         const { currentUser } = this.state;
 
         return (this._isMounted &&
-            <Router >
-                <Scene key='root'>
-                    <Scene key='login' component={Login} title='Iniciar Sesión' initial={!currentUser}/>
-                    <Scene key='signUp' component={SignUp} title='Crear Cuenta' />
+            <Router>
+                <Scene
+					key='root'
+					renderRightButton={<MenuButton />}
+				>
+                    <Scene
+						key='login'
+						component={Login}
+						title='Iniciar Sesión'
+						initial={!currentUser}
+						setCurrentUser={(currentUser) => this.setCurrentUser(currentUser)}
+					/>
+                    <Scene
+						key='signUp'
+						component={SignUp}
+						title='Crear Cuenta'
+						setCurrentUser={(currentUser) => this.setCurrentUser(currentUser)}
+					/>
+					<Scene
+						key='menuDrawer'
+						component={DrawerContent}
+						currentUser={currentUser}
+						logout={() => this.logout()}
+						drawerPosition='right'
+					/>
 
                     <Scene key='spacesIndex' component={Spaces} title='Facultades' initial={currentUser} currentUser={currentUser}/>
                     <Scene key='showSpace' component={ShowSpace} title />
@@ -58,11 +95,7 @@ export default class Routes extends Component {
                     <Scene key='editTool' component={ToolForm} title='Editar Herramienta' />
 
                     <Scene key='createReservation' component={ReservationForm} title='Crear Reserva' currentUser={currentUser}/>
-
-                    <Scene drawer={true}
-                        key="drawerMenu"
-                        component={DrawerView}
-                    />
+					<Scene key='myReservations' component={ReservationForm} title='Crear Reserva' currentUser={currentUser}/>
                 </Scene>
             </Router>
         )

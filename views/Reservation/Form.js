@@ -55,7 +55,7 @@ class ReservationForm extends Component {
             if (response.status == 'success'){
                 this.goToShowElement();
             }else{
-                console.warn(response)
+                console.warn(response.message);
             }
         })
         .catch(function (error) {

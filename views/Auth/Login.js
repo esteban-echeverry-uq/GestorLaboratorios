@@ -28,7 +28,7 @@ class Login extends Component {
     login() {
         sessionService.login(this.state.newUser).then(response => {
             if (response.status === 'success') {
-                this.goToSpacesIndex();
+               this.props.setCurrentUser(response.currentUser);
             }
             else {
                 this.setState({ error: response.message });
@@ -38,10 +38,6 @@ class Login extends Component {
 
     goToSignUp() {
         Actions.signUp();
-    }
-
-    goToSpacesIndex() {
-        Actions.spacesIndex();
     }
 
     updateInputValue(input, value) {
