@@ -90,7 +90,7 @@ class Show extends Component {
         Actions.createReservation({
             elementData: this.props.toolData,
             submitText: 'Crear Reserva',
-            reservationType: 'tool'
+            elementType: 'Tools'
         })
     }
 

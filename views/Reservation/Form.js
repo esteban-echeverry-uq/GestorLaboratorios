@@ -21,7 +21,7 @@ class ReservationForm extends Component {
     }
 
     goToShowElement() {
-        if(this.props.reservationType == 'room'){
+        if(this.props.elementType == 'Rooms'){
             Actions.showRoom({
                 roomData: this.props.elementData,
                 spaceData: this.props.spaceData,
@@ -43,10 +43,12 @@ class ReservationForm extends Component {
     }
 
     submit(){
+        let {currentUser, elementData, elementType} = this.props
         reservationService.create({
             ...this.state,
-            userID: this.props.currentUser._id,
-            elementID: this.props.elementData._id
+            userID: currentUser._id,
+            element: elementData._id,
+            elementType
         }).then((response) => {
             if (response.status == 'success'){
                 this.goToShowElement();

@@ -199,4 +199,32 @@ module.exports = class SessionService {
 			};
 		}
 	}
+
+	async confirm(reservation) {
+		const URLParams = {
+			reservationID: reservation._id
+		};
+
+		try {
+			const { data } = await ServerAction(RERVATION_ENDPOINTS.CONFIRM, URLParams);
+
+			if (data.status === 'success') {
+				return {
+					status: 'success',
+					reservation: data.reservation
+				};
+			}
+			else {
+				return {
+					status: 'error',
+					message: data.message
+				};
+			}
+		} catch (e) {
+			return {
+				status: 'error',
+				message: e.message
+			};
+		}
+	}
 };

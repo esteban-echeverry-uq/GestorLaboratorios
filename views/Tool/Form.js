@@ -41,7 +41,7 @@ class ToolForm extends Component {
         axios({
             method: ENDPOINT.METHOD,
             url,
-            data:  {...this.state, spaceID: spaceData._id, elementType: 'tool'}
+            data:  {...this.state, spaceID: spaceData._id}
         }).then((response) => {
             if(response.data.status === 'success'){
                 Actions.showSpace({spaceData, title: spaceData.name})
