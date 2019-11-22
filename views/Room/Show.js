@@ -83,7 +83,7 @@ class Show extends Component {
         return (
             <SafeAreaView>
                 <ScrollView>
-                    { currentUser.role === 'adming' &&
+                    { currentUser.role === 'admin' &&
                         <View style={[styles.horizontal, styles.container]}>
                             <Button title="Editar Sala" action={() => this.goToEditRoom(this.props.spaceData)} bgColor='blue' />
                             <Button title="Eliminar Sala" action={this.deleteSpace} bgColor='red'/>
