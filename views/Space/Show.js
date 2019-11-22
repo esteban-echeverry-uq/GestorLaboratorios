@@ -63,17 +63,21 @@ class Show extends Component {
         });
     }
     render(){
-        let {spaceData} = this.props;
+        let {spaceData, currentUser} = this.props;
         return (
             <Fragment>
-                <View style={styles.horizontal}>
-                    <Button title="Editar Espacio" action={() => this.goToEditSpace(spaceData)} bgColor='blue' />
-                    <Button title="Eliminar Espacio" action={this.deleteSpace} bgColor='red'/>
-                </View>
-                <View style={styles.horizontal}>
-                    <Button title="Crear Sala" action={() => this.goToCreateRoom(spaceData)} bgColor='blue' />
-                    <Button title="Crear Herramienta" action={() => this.goToCreateTool(spaceData)} bgColor='blue' />
-                </View>
+                { currentUser.role === 'admin' && 
+                    <>
+                    <View style={styles.horizontal}>
+                        <Button title="Editar Espacio" action={() => this.goToEditSpace(spaceData)} bgColor='blue' />
+                        <Button title="Eliminar Espacio" action={this.deleteSpace} bgColor='red'/>
+                    </View>
+                    <View style={styles.horizontal}>
+                        <Button title="Crear Sala" action={() => this.goToCreateRoom(spaceData)} bgColor='blue' />
+                        <Button title="Crear Herramienta" action={() => this.goToCreateTool(spaceData)} bgColor='blue' />
+                    </View>
+                    </>
+                }
                 <TabView
                     navigationState={this.state}
                     renderScene ={ ({ route }) => {

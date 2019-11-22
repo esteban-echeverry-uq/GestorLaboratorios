@@ -43,12 +43,15 @@ class Index extends Component {
 
     render(){
         let {spaces} = this.state;
+        let {currentUser} = this.props
         return(
             spaces.length > 0 &&
             <View>
+                {currentUser.role === 'admin' && 
                 <View style={styles.horizontal}>
                     <Button title="Crear Espacio" action={this.goToCreateSpace} bgColor='blue'/>
                 </View>
+                }
                 <FlatList
                     data={spaces}
                     renderItem={({ item }) => <ListItem item={item} action={this.goToShowSpace} />}

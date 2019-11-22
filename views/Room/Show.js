@@ -79,13 +79,17 @@ class Show extends Component {
     }
     
     render(){
+        let {currentUser} = this.props
         return (
             <SafeAreaView>
                 <ScrollView>
-                    <View style={[styles.horizontal, styles.container]}>
-                        <Button title="Editar Sala" action={() => this.goToEditRoom(this.props.spaceData)} bgColor='blue' />
-                        <Button title="Eliminar Sala" action={this.deleteSpace} bgColor='red'/>
-                    </View>
+                    { currentUser.role === 'adming' &&
+                        <View style={[styles.horizontal, styles.container]}>
+                            <Button title="Editar Sala" action={() => this.goToEditRoom(this.props.spaceData)} bgColor='blue' />
+                            <Button title="Eliminar Sala" action={this.deleteSpace} bgColor='red'/>
+                        </View>
+                    }
+                    
                     {this.renderReservations()}
                     <Button title='Crear Reserva' action={() => this.goToCreateReservation()} bgColor='green'/>
                 </ScrollView>
