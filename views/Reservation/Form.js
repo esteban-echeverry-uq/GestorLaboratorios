@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { 
     Button, 
     View, 
-    StyleSheet
+    StyleSheet,
+    Text
 } from 'react-native';
 import { Dropdown } from 'react-native-material-dropdown';
 import dropDownData from './dropDown';
@@ -16,7 +17,8 @@ class ReservationForm extends Component {
         this.state = {
             name: '',
             startTime: '',
-            endTime: ''
+            endTime: '',
+            errorText: ''
         };
     }
 
@@ -43,7 +45,12 @@ class ReservationForm extends Component {
     }
 
     submit(){
+        let {startTime,endTime} = this.state
         let {currentUser, elementData, elementType} = this.props
+        if(startTime > endTime){
+            this.setState({errorText: 'La hora de fin debe ser mayor a la de inicio'})
+            return
+        }
         reservationService.create({
             ...this.state,
             date: elementData.date,
@@ -65,6 +72,7 @@ class ReservationForm extends Component {
     render() {
         return(
             <View style={styles.container}>
+                <Text style={{color: 'white', marginBottom: 20}}>{this.state.errorText}</Text>
                 <Dropdown
                     label='Hora de Inicio'
                     data={dropDownData}
