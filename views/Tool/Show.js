@@ -17,6 +17,16 @@ class Show extends Component {
     }
 
     componentDidMount() {
+        this.getReservations();
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.changed) {
+            this.getReservations();
+        }
+    }
+
+    getReservations = () => {
         reservationService.getAllByElement(this.props.toolData._id).then(response => {
             if (response.status === 'success') {
                 this.setState({
@@ -27,7 +37,7 @@ class Show extends Component {
                 console.warn(response.status);
             }
         });
-    }
+    };
 
     goToEditTool = (spaceData) => {
         Actions.editTool({
@@ -36,7 +46,7 @@ class Show extends Component {
             submitText: 'Editar Herramienta',
             action: 'edit'
         })
-    }
+    };
 
     deleteTool= () =>{
         let {toolData, spaceData} = this.props;
@@ -44,22 +54,26 @@ class Show extends Component {
         .then((response) => {
             console.warn(response)
             if(response.status === 'success'){
-                Actions.showSpace({spaceData, title: spaceData.name})
+                Actions.showSpace({
+                    spaceData,
+                    title: spaceData.name,
+                    changed: true
+                });
             }
         })
         .catch(function (error) {
             console.log(error);
         });
-    }
+    };
 
-    setReservationColor(availability){
+    setReservationColor(availability) {
         switch(availability){
             case 'Disponible':
-                return styles.available
+                return styles.available;
             case 'Por Confirmar':
-                return styles.pending
+                return styles.pending;
             case 'Reservado':
-                return styles.reserved
+                return styles.reserved;
         }
     }
 
@@ -95,7 +109,8 @@ class Show extends Component {
     }
 
     render(){
-        let { currentUser } = this.props
+        let { currentUser } = this.props;
+
         return (
             <SafeAreaView>
                 <ScrollView>

@@ -25,13 +25,15 @@ class ReservationForm extends Component {
             Actions.showRoom({
                 roomData: this.props.elementData,
                 spaceData: this.props.spaceData,
-                title: this.props.elementData.name
+                title: this.props.elementData.name,
+                changed: true
             })
         }else{
             Actions.showTool({
                 toolData: this.props.elementData,
                 spaceData: this.props.spaceData,
-                title: this.props.elementData.name
+                title: this.props.elementData.name,
+                changed: true
             })
         }
     }
@@ -43,7 +45,8 @@ class ReservationForm extends Component {
     }
 
     submit(){
-        let {currentUser, elementData, elementType} = this.props
+        let {currentUser, elementData, elementType} = this.props;
+
         reservationService.create({
             ...this.state,
             userID: currentUser._id,
