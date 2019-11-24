@@ -31,8 +31,8 @@ module.exports = class SessionService {
 		}
 	}
 
-	async getAllByElement(elementID) {
-		const URLParams = { elementID };
+	async getAllByElement(elementID, date) {
+		const URLParams = { elementID, date };
 
 		try {
 			const { data } = await ServerAction(RERVATION_ENDPOINTS.GET_ALL_BY_ELEMENT, URLParams);

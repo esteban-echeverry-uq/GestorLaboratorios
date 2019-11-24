@@ -15,20 +15,20 @@ class Show extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            date: moment().format('DD-MM-YYYY'),
+            date: moment().format('YYYY-MM-DD'),
             reservations: []
         }
     }
 
     componentDidMount() {
-        reservationService.getAllByElement(this.props.roomData._id).then(response => {
+        reservationService.getAllByElement(this.props.roomData._id, this.state.date).then(response => {
             if (response.status === 'success') {
                 this.setState({
                     reservations: response.reservations
                 });
             }
             else {
-                console.warn(response.message);
+                console.warn(response);
             }
         });
     }
@@ -115,7 +115,7 @@ class Show extends Component {
                             date={this.state.date}
                             mode='date'
                             placeholder='Seleccionar Fecha'
-                            format='DD-MM-YYYY'
+                            format='YYYY-MM-DD'
                             confirmBtnText='Confirmar'
                             cancelBtnText='Cancelar'
                             customStyles={{

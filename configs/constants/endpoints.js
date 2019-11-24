@@ -20,7 +20,7 @@ module.exports = {
 			METHOD: httpMethods.DELETE
 		},
 		GET_ALL_BY_ELEMENT: {
-			PATH: '`api/elements/${URLParams.elementID}/reservations`',
+			PATH: '`api/elements/${URLParams.elementID}/reservations?date=${URLParams.date}`',
 			METHOD: httpMethods.GET
 		},
 		GET_ALL_BY_USER: {
