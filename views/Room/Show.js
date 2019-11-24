@@ -2,14 +2,20 @@ import React, { Component } from 'react';
 import {View, StyleSheet, Text, ScrollView, SafeAreaView} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Button from '../../components/Button';
+import moment from 'moment';
+import DatePicker from 'react-native-datepicker'
 
 const ReservationService = require('../../services/reservationService');
 const reservationService = new ReservationService();
+
+const RoomService = require('../../services/roomService');
+const roomService = new RoomService();
 
 class Show extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            date: moment().format('DD-MM-YYYY'),
             reservations: []
         }
     }
@@ -42,6 +48,20 @@ class Show extends Component {
             submitText: 'Editar Sala',
             action: 'edit'
         })
+    }
+
+    deleteRoom = () =>{
+        let {roomData, spaceData} = this.props;
+        roomService.delete(roomData)
+        .then((response) => {
+            console.warn(response)
+            if(response.status === 'success'){
+                Actions.showSpace({spaceData, title: spaceData.name})
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
     }
 
     setReservationColor(availability){
@@ -85,11 +105,31 @@ class Show extends Component {
                 <ScrollView>
                     { currentUser.role === 'admin' &&
                         <View style={[styles.horizontal, styles.container]}>
-                            <Button title="Editar Sala" action={() => this.goToEditRoom(this.props.spaceData)} bgColor='blue' />
-                            <Button title="Eliminar Sala" action={this.deleteSpace} bgColor='red'/>
+                            <Button title='Editar Sala' action={() => this.goToEditRoom(this.props.spaceData)} bgColor='blue' />
+                            <Button title='Eliminar Sala' action={this.deleteRoom} bgColor='red'/>
                         </View>
                     }
-                    
+                    <View style={{display: 'flex', alignItems: 'center'}}>
+                        <DatePicker
+                            style={{width: 200, margin: 20}}
+                            date={this.state.date}
+                            mode='date'
+                            placeholder='Seleccionar Fecha'
+                            format='DD-MM-YYYY'
+                            confirmBtnText='Confirmar'
+                            cancelBtnText='Cancelar'
+                            customStyles={{
+                            dateIcon: {
+                                display: 'none'
+                            },
+                            dateInput: {
+                                borderColor: '#176623',
+                                backgroundColor: 'white'
+                            }
+                            }}
+                            onDateChange={(date) => {this.setState({date: date})}}
+                        />
+                    </View>
                     {this.renderReservations()}
                     <Button title='Crear Reserva' action={() => this.goToCreateReservation()} bgColor='green'/>
                 </ScrollView>
@@ -115,7 +155,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flex: 0.5,
         padding: 10,
-        textAlign: 'center'
+        textAlign: 'center',
     },
     statusBox:{
         borderColor: 'black',
