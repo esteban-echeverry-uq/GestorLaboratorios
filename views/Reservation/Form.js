@@ -46,6 +46,7 @@ class ReservationForm extends Component {
         let {currentUser, elementData, elementType} = this.props
         reservationService.create({
             ...this.state,
+            date: elementData.date,
             userID: currentUser._id,
             element: elementData._id,
             elementType

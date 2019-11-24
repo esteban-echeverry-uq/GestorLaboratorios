@@ -33,9 +33,10 @@ class Show extends Component {
         });
     }
 
-    goToCreateReservation(){
+    goToCreateReservation(date){
+        let elementData = {...this.props.roomData, date}
         Actions.createReservation({
-            elementData: this.props.roomData,
+            elementData,
             submitText: 'Crear Reserva',
             elementType: 'Rooms'
         })
@@ -99,6 +100,7 @@ class Show extends Component {
     }
     
     render(){
+        let {date} = this.state
         let {currentUser} = this.props
         return (
             <SafeAreaView>
@@ -131,7 +133,7 @@ class Show extends Component {
                         />
                     </View>
                     {this.renderReservations()}
-                    <Button title='Crear Reserva' action={() => this.goToCreateReservation()} bgColor='green'/>
+                    <Button title='Crear Reserva' action={() => this.goToCreateReservation(date)} bgColor='green'/>
                 </ScrollView>
             </SafeAreaView>
         );
