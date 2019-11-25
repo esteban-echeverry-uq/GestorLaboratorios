@@ -91,7 +91,7 @@ class MyReservations extends Component {
 					<Text style={[styles.box, styles.headingBox]}>{reservation.element.name}</Text>
 					<View style={styles.horizontal} >
 						<Text style={[styles.box]}>{`${reservation.startTime}:00`}</Text>
-						<Text style={[styles.box]}>{`${reservation.endTime}:00`}</Text>
+						<Text style={[styles.box]}>{`${reservation.endTime+1}:00`}</Text>
 					</View>
 					{reservation.status === 'pending' && this.renderReservationActions(reservation)}
 				</View>

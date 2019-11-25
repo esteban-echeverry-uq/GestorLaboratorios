@@ -56,7 +56,7 @@ class Login extends Component {
 
         return(
             <View style={styles.container}>
-                {error && <Text>{error}</Text>}
+                {error && <Text style={styles.errorMessage}>{error}</Text>}
                 <TextInput
                     defaultValue={newUser.email}
                     onChangeText={(value) => this.updateInputValue('email', value)}
@@ -101,6 +101,10 @@ const styles = StyleSheet.create({
         height: 45,
         marginBottom: 10,
         padding: 5
+    },
+    errorMessage: {
+        color: 'white',
+        marginBottom: 20
     },
     button: {
         borderStyle: "solid",
