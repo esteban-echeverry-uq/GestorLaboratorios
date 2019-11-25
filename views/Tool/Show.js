@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import {View, StyleSheet, Text, SafeAreaView, ScrollView} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Button from '../../components/Button';
+import moment from 'moment';
+import DatePicker from 'react-native-datepicker'
+
 const ReservationService = require('../../services/reservationService');
 const reservationService = new ReservationService();
 
@@ -12,32 +15,43 @@ class Show extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            date: moment().format('YYYY-MM-DD'),
             reservations: []
         }
     }
 
-    componentDidMount() {
-        this.getReservations();
+    componentDidMount(){
+        this.getReservations(moment().format('YYYY-MM-DD'));
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.changed) {
-            this.getReservations();
+            this.getReservations(moment().format('YYYY-MM-DD'));
         }
     }
 
-    getReservations = () => {
-        reservationService.getAllByElement(this.props.toolData._id).then(response => {
+    getReservations(date) {
+        reservationService.getAllByElement(this.props.toolData._id, date).then(response => {
             if (response.status === 'success') {
                 this.setState({
-                    reservations: response.reservations
+                    reservations: response.reservations,
+                    date
                 });
             }
             else {
-                console.warn(response.status);
+                console.warn(response);
             }
         });
-    };
+    }
+
+    goToCreateReservation(date){
+        let elementData = {...this.props.toolData, date};
+        Actions.createReservation({
+            elementData,
+            submitText: 'Crear Reserva',
+            elementType: 'Tools'
+        })
+    }
 
     goToEditTool = (spaceData) => {
         Actions.editTool({
@@ -100,28 +114,42 @@ class Show extends Component {
         return reservations.map((reservation) => reservation)
     }
 
-    goToCreateReservation(){
-        Actions.createReservation({
-            elementData: this.props.toolData,
-            submitText: 'Crear Reserva',
-            elementType: 'Tools'
-        })
-    }
-
     render(){
+        let { date } = this.state
         let { currentUser } = this.props;
 
         return (
             <SafeAreaView>
                 <ScrollView>
-                    { currentUser &&
+                    { currentUser.role === 'admin' &&
                         <View style={[styles.horizontal, styles.container]}>
                                 <Button title="Editar Herramienta" action={() => this.goToEditTool(this.props.spaceData)} bgColor='blue' />
                                 <Button title="Eliminar Herramienta" action={this.deleteTool} bgColor='red'/>
                         </View>
                     }
+                    <View style={{display: 'flex', alignItems: 'center'}}>
+                        <DatePicker
+                            style={{width: 200, margin: 20}}
+                            date={this.state.date}
+                            mode='date'
+                            placeholder='Seleccionar Fecha'
+                            format='YYYY-MM-DD'
+                            confirmBtnText='Confirmar'
+                            cancelBtnText='Cancelar'
+                            customStyles={{
+                            dateIcon: {
+                                display: 'none'
+                            },
+                            dateInput: {
+                                borderColor: '#176623',
+                                backgroundColor: 'white'
+                            }
+                            }}
+                            onDateChange={(date) => {this.getReservations(date)}}
+                        />
+                    </View>
                     {this.renderReservations()}
-                    <Button title='Crear Reserva' action={() => this.goToCreateReservation()} bgColor='green'/>
+                    <Button title='Crear Reserva' action={() => this.goToCreateReservation(date)} bgColor='green'/>
                 </ScrollView>
             </SafeAreaView>
         );

@@ -46,7 +46,6 @@ class Show extends Component {
 
     goToCreateReservation(date){
         let elementData = {...this.props.roomData, date};
-
         Actions.createReservation({
             elementData,
             submitText: 'Crear Reserva',

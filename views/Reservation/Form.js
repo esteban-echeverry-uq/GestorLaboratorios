@@ -50,7 +50,6 @@ class ReservationForm extends Component {
         let {startTime,endTime} = this.state
         let {currentUser, elementData, elementType} = this.props
         if(startTime > endTime){
-            console.warn(startTime,endTime)
             this.setState({errorText: 'La hora de fin debe ser mayor a la de inicio'})
             return
         }
@@ -64,7 +63,7 @@ class ReservationForm extends Component {
             if (response.status == 'success'){
                 this.goToShowElement();
             }else{
-                console.warn(response.message);
+                console.warn("Hola",response.message);
             }
         })
         .catch(function (error) {
@@ -83,7 +82,6 @@ class ReservationForm extends Component {
                     textColor='white'
                     selectedItemColor='black'
                     onChangeText={(value) => {
-                        console.warn(value)
                         this.setState({
                             startTime: value
                         })
@@ -96,7 +94,6 @@ class ReservationForm extends Component {
                     textColor='white'
                     selectedItemColor='black'
                     onChangeText={(value) => {
-                        console.warn(value)
                         this.setState({
                             endTime: value-1
                         })
