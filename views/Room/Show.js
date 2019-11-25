@@ -21,7 +21,13 @@ class Show extends Component {
     }
 
     componentDidMount(){
-        this.getReservations(moment().format('YYYY-MM-DD'))
+        this.getReservations(moment().format('YYYY-MM-DD'));
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.changed) {
+            this.getReservations(moment().format('YYYY-MM-DD'));
+        }
     }
 
     getReservations(date) {
@@ -39,7 +45,8 @@ class Show extends Component {
     }
 
     goToCreateReservation(date){
-        let elementData = {...this.props.roomData, date}
+        let elementData = {...this.props.roomData, date};
+
         Actions.createReservation({
             elementData,
             submitText: 'Crear Reserva',
