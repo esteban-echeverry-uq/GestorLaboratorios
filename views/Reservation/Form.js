@@ -27,13 +27,15 @@ class ReservationForm extends Component {
             Actions.showRoom({
                 roomData: this.props.elementData,
                 spaceData: this.props.spaceData,
-                title: this.props.elementData.name
+                title: this.props.elementData.name,
+                changed: true
             })
         }else{
             Actions.showTool({
                 toolData: this.props.elementData,
                 spaceData: this.props.spaceData,
-                title: this.props.elementData.name
+                title: this.props.elementData.name,
+                changed: true
             })
         }
     }

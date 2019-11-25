@@ -15,32 +15,44 @@ class Tools extends Component {
     }
 
     componentDidMount(){
+        this.getTools();
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.changed) {
+            this.getTools();
+        }
+    }
+
+    getTools = () => {
         const ENDPOINT = endpoints.TOOL.GET_ALL;
         const url = endpointGenerator(ENDPOINT.PATH, { spaceID: this.props.spaceData._id});
         axios({
             method: ENDPOINT.METHOD,
             url
         })
-        .then((response) => {
-            this.setState({
-                tools: response.data.tools
+            .then((response) => {
+                this.setState({
+                    tools: response.data.tools
+                })
             })
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-    }
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
 
     goToShowTools = (toolData) => {
         Actions.showTool({
             toolData,
             spaceData: this.props.spaceData,
-            title: toolData.name
-        })
-    }
+            title: toolData.name,
+            currentUser: this.props.currentUser
+        });
+    };
     
     render(){
-        let {tools} = this.state;
+        const {tools} = this.state;
+
         return (
             tools.length > 0 &&
             <SafeAreaView style={styles.container}>

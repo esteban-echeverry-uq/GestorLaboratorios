@@ -15,32 +15,44 @@ class Rooms extends Component {
     }
 
     componentDidMount(){
+        this.getRooms();
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.currentUser) {
+            this.getRooms();
+        }
+    }
+
+    getRooms = () => {
         const ENDPOINT = endpoints.ROOM.GET_ALL;
         const url = endpointGenerator(ENDPOINT.PATH, { spaceID: this.props.spaceData._id});
         axios({
             method: ENDPOINT.METHOD,
             url
         })
-        .then((response) => {
-            this.setState({
-                rooms: response.data.rooms
+            .then((response) => {
+                this.setState({
+                    rooms: response.data.rooms
+                })
             })
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-    }
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
 
     goToShowRoom = (roomData) => {
         Actions.showRoom({
             roomData,
             spaceData: this.props.spaceData,
-            title: roomData.name
-        })
-    }
+            title: roomData.name,
+            currentUser: this.props.currentUser
+        });
+    };
     
     render(){
-        let {rooms} = this.state;
+        const {rooms} = this.state;
+
         return (
             rooms.length > 0 &&
             <SafeAreaView style={styles.container}>

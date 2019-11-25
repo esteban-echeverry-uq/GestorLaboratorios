@@ -49,21 +49,25 @@ class Show extends Component {
             submitText: 'Editar Sala',
             action: 'edit'
         })
-    }
+    };
 
-    deleteRoom = () =>{
+    deleteRoom = () => {
         let {roomData, spaceData} = this.props;
         roomService.delete(roomData)
         .then((response) => {
             console.warn(response)
             if(response.status === 'success'){
-                Actions.showSpace({spaceData, title: spaceData.name})
+                Actions.showSpace({
+                    spaceData,
+                    title: spaceData.name,
+                    changed: true
+                })
             }
         })
         .catch(function (error) {
             console.log(error);
         });
-    }
+    };
 
     setReservationColor(availability){
         switch(availability){
@@ -87,6 +91,7 @@ class Show extends Component {
 
     renderReservations(){
         let reservations=[];
+
         for(let i=7; i <= 22; i++){
             const existingReservation = this.state.reservations.filter( (reservation) =>  reservation.startTime <= i && i <= reservation.endTime);
             if(existingReservation.length){
@@ -96,6 +101,7 @@ class Show extends Component {
                 reservations.push(this.scheduleItem(i,'Disponible'))
             }
         }
+
         return reservations.map((reservation) => reservation)
     }
     

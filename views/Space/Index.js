@@ -17,24 +17,38 @@ class Index extends Component {
     }
 
     componentDidMount(){
+       this.getSpaces();
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.changed) {
+            this.getSpaces();
+        }
+    }
+
+    getSpaces = () => {
         const ENDPOINT = endpoints.SPACE.GET_ALL;
         const url = endpointGenerator(ENDPOINT.PATH);
         axios({
             method: ENDPOINT.METHOD,
             url
         })
-        .then((response) => {
-            this.setState({
-                spaces: response.data.spaces
+            .then((response) => {
+                this.setState({
+                    spaces: response.data.spaces
+                })
             })
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-    }
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
 
     goToShowSpace = (spaceData) => {
-        Actions.showSpace({spaceData, title: spaceData.name})
+        Actions.showSpace({
+            spaceData,
+            title: spaceData.name,
+            currentUser: this.props.currentUser
+        })
     };
 
     goToCreateSpace = () => {
@@ -43,7 +57,8 @@ class Index extends Component {
 
     render(){
         let {spaces} = this.state;
-        let {currentUser} = this.props
+        let {currentUser} = this.props;
+
         return(
             spaces.length > 0 &&
             <View>
