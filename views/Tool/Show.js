@@ -25,8 +25,11 @@ class Show extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.changed) {
+        if (this.props.reservationCreated) {
             this.getReservations(moment().format('YYYY-MM-DD'));
+        }
+        if (this.props.changed) {
+            Actions.pop({ changed: true });
         }
     }
 
@@ -66,13 +69,9 @@ class Show extends Component {
         let {toolData, spaceData} = this.props;
         toolService.delete(toolData)
         .then((response) => {
-            console.warn(response)
             if(response.status === 'success'){
-                Actions.showSpace({
-                    spaceData,
-                    title: spaceData.name,
-                    changed: true
-                });
+                Actions.pop();
+                setTimeout(() => Actions.refresh({ changed: true }));
             }
         })
         .catch(function (error) {

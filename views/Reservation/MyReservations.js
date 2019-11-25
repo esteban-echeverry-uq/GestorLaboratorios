@@ -34,7 +34,7 @@ class MyReservations extends Component {
 					}else{
 						tools.push(reservation)
 					}
-				})
+				});
 				this.setState({rooms,tools, firstTime: true})
 			}
 			else {

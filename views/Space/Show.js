@@ -20,7 +20,7 @@ class Show extends Component {
             ]
         }
     }
-    
+
     goToEditSpace = (spaceData) => {
         Actions.editSpace({
             spaceData,
@@ -64,7 +64,7 @@ class Show extends Component {
     };
 
     render(){
-        let {spaceData, currentUser} = this.props;
+        const { spaceData, currentUser, changed } = this.props;
 
         return (
             <Fragment>
@@ -85,9 +85,9 @@ class Show extends Component {
                     renderScene ={ ({ route }) => {
                         switch (route.key) {
                             case 'rooms':
-                                return <Rooms spaceData={spaceData} currentUser={currentUser} />;
+                                return <Rooms changed={changed} spaceData={spaceData} currentUser={currentUser} />;
                             case 'tools':
-                                return <Tools spaceData={spaceData} currentUser={currentUser} />;
+                                return <Tools  changed={changed} spaceData={spaceData} currentUser={currentUser} />;
                             default:
                                 return null;
                         }

@@ -23,21 +23,8 @@ class ReservationForm extends Component {
     }
 
     goToShowElement() {
-        if(this.props.elementType == 'Rooms'){
-            Actions.showRoom({
-                roomData: this.props.elementData,
-                spaceData: this.props.spaceData,
-                title: this.props.elementData.name,
-                changed: true
-            })
-        }else{
-            Actions.showTool({
-                toolData: this.props.elementData,
-                spaceData: this.props.spaceData,
-                title: this.props.elementData.name,
-                changed: true
-            })
-        }
+        Actions.pop();
+        setTimeout(() => Actions.refresh({ reservationCreated: true }));
     }
 
     updateValue(text,field){
@@ -47,12 +34,14 @@ class ReservationForm extends Component {
     }
 
     submit(){
-        let {startTime,endTime} = this.state
-        let {currentUser, elementData, elementType} = this.props
+        const { startTime,endTime } = this.state;
+        const { currentUser, elementData, elementType } = this.props;
+
         if(startTime > endTime){
             this.setState({errorText: 'La hora de fin debe ser mayor a la de inicio'})
             return
         }
+
         reservationService.create({
             ...this.state,
             date: elementData.date,

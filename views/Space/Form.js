@@ -19,7 +19,7 @@ class SpaceForm extends Component {
     }
 
     goToSpacesIndex() {
-        Actions.spacesIndex();
+        Actions.reset('spacesIndex');
     }
 
     updateValue(text,field){

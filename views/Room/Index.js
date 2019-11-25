@@ -19,7 +19,7 @@ class Rooms extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.currentUser) {
+        if (this.props.changed) {
             this.getRooms();
         }
     }

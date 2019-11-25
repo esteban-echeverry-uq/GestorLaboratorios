@@ -44,9 +44,10 @@ class ToolForm extends Component {
             data:  {...this.state, spaceID: spaceData._id}
         }).then((response) => {
             if(response.data.status === 'success'){
-                Actions.showSpace({spaceData, title: spaceData.name})
+                Actions.popTo('showSpace');
+                setTimeout(() => Actions.refresh({ changed: true }));
             }else{
-                console.warn(response)
+                console.warn(response);
             }
         })
         .catch(function (error) {
