@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { 
     Button, 
     TextInput, 
-    View, 
+    View,
+    Text,
     StyleSheet,
 } from 'react-native';
 import axios from 'axios';
@@ -15,6 +16,7 @@ class RoomForm extends Component {
         super(props);
         this.state = {
             name: '',
+            errorMessage: null
         };
     }
 
@@ -47,7 +49,7 @@ class RoomForm extends Component {
                 Actions.popTo('showSpace');
                 setTimeout(() => Actions.refresh({ changed: true }));
             }else{
-                console.warn(response);
+                this.setState({ errorMessage: response.data.message})
             }
         })
         .catch(function (error) {
@@ -59,6 +61,7 @@ class RoomForm extends Component {
         let {roomData} = this.props;
         return(
             <View style={styles.container}>
+                <Text style={styles.errorMessage}>{this.state.errorMessage}</Text>
                 <TextInput
                     placeholder={roomData ? roomData.name : "Nombre de la sala"}
                     style={styles.textInput}
@@ -87,6 +90,10 @@ const styles = StyleSheet.create({
         height: 45,
         marginBottom: 10,
         padding: 5
+    },
+    errorMessage: {
+        color: 'white',
+        marginBottom: 20
     },
     button: {
         borderStyle: "solid",
