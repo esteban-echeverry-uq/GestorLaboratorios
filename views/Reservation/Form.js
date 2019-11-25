@@ -16,8 +16,8 @@ class ReservationForm extends Component {
         super(props);
         this.state = {
             name: '',
-            startTime: '',
-            endTime: '',
+            startTime: null,
+            endTime: null,
             errorText: ''
         };
     }
@@ -50,6 +50,7 @@ class ReservationForm extends Component {
         let {startTime,endTime} = this.state
         let {currentUser, elementData, elementType} = this.props
         if(startTime > endTime){
+            console.warn(startTime,endTime)
             this.setState({errorText: 'La hora de fin debe ser mayor a la de inicio'})
             return
         }
@@ -81,7 +82,8 @@ class ReservationForm extends Component {
                     baseColor='white'
                     textColor='white'
                     selectedItemColor='black'
-                    onChangeText={(value) =>{
+                    onChangeText={(value) => {
+                        console.warn(value)
                         this.setState({
                             startTime: value
                         })
@@ -93,9 +95,10 @@ class ReservationForm extends Component {
                     baseColor='white'
                     textColor='white'
                     selectedItemColor='black'
-                    onChangeText={(value) =>{
+                    onChangeText={(value) => {
+                        console.warn(value)
                         this.setState({
-                            endTime: value
+                            endTime: value-1
                         })
                     }}
                 />

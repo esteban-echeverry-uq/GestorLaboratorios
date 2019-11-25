@@ -20,11 +20,16 @@ class Show extends Component {
         }
     }
 
-    componentDidMount() {
-        reservationService.getAllByElement(this.props.roomData._id, this.state.date).then(response => {
+    componentDidMount(){
+        this.getReservations(moment().format('YYYY-MM-DD'))
+    }
+
+    getReservations(date) {
+        reservationService.getAllByElement(this.props.roomData._id, date).then(response => {
             if (response.status === 'success') {
                 this.setState({
-                    reservations: response.reservations
+                    reservations: response.reservations,
+                    date
                 });
             }
             else {
@@ -135,7 +140,7 @@ class Show extends Component {
                                 backgroundColor: 'white'
                             }
                             }}
-                            onDateChange={(date) => {this.setState({date: date})}}
+                            onDateChange={(date) => {this.getReservations(date)}}
                         />
                     </View>
                     {this.renderReservations()}
