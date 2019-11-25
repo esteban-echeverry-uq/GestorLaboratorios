@@ -80,7 +80,7 @@ export default class Routes extends Component {
 						setCurrentUser={(currentUser) => this.setCurrentUser(currentUser)}
 					/>
 
-                    <Scene key='spacesIndex' component={Spaces} title='Facultades' initial={currentUser} currentUser={currentUser} />
+                    <Scene key='spacesIndex' component={Spaces} title='Facultades' initial={currentUser} currentUser={currentUser} type="reset"/>
                     <Scene key='showSpace' component={ShowSpace} title currentUser={currentUser}/>
                     <Scene key='createSpace' component={SpaceForm} title='Crear Espacio' />
                     <Scene key='editSpace' component={SpaceForm} title='Editar Espacio' />
