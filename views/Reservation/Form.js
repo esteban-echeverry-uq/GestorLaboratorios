@@ -8,6 +8,7 @@ import {
 import { Dropdown } from 'react-native-material-dropdown';
 import dropDownData from './dropDown';
 import { Actions } from "react-native-router-flux";
+import moment from 'moment'
 const ReservationService = require('../../services/reservationService');
 const reservationService = new ReservationService();
 
@@ -60,12 +61,22 @@ class ReservationForm extends Component {
     }
 
     render() {
+        let { elementData } = this.props
+        let filteredDropDowndata;
+
+        if (moment().format('YYYY-MM-DD') === elementData.date ){
+            filteredDropDowndata = dropDownData.filter((data) => moment().format('H') < data.value)
+        }
+        else {
+            filteredDropDowndata = dropDownData
+        }
+
         return(
             <View style={styles.container}>
                 <Text style={{color: 'white', marginBottom: 20}}>{this.state.errorText}</Text>
                 <Dropdown
                     label='Hora de Inicio'
-                    data={dropDownData}
+                    data={filteredDropDowndata}
                     baseColor='white'
                     textColor='white'
                     selectedItemColor='black'
@@ -77,7 +88,7 @@ class ReservationForm extends Component {
                 />
                 <Dropdown
                     label='Hora de Fin'
-                    data={dropDownData}
+                    data={filteredDropDowndata}
                     baseColor='white'
                     textColor='white'
                     selectedItemColor='black'
