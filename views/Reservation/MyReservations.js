@@ -85,10 +85,15 @@ class MyReservations extends Component {
 	confirmReservation(reservation) {
 		reservationService.confirm(reservation).then(response => {
 			if (response.status === 'success') {
+				this.setState({reservations: []})
 				this.setReservations();
 			}
 			else {
-				this.setState({timeText: response.message});
+				this.setState({
+					timeText: response.message,
+					reservations: []
+				});
+				this.setReservations();
 			}
 		});
 	}
@@ -123,7 +128,7 @@ class MyReservations extends Component {
 				</View> ||
 				<View style={[styles.horizontal]}>
 						<Text style={styles.infoText}>
-							Reserva terminada
+							Reserva Completada
 						</Text>
 				</View> 
 		);

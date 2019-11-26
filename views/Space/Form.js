@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { 
+    Text,
     TextInput, 
     View, 
     StyleSheet,
@@ -15,6 +16,7 @@ class SpaceForm extends Component {
         super(props);
         this.state = {
             name: '',
+            errorMessage: null
         };
     }
 
@@ -29,6 +31,10 @@ class SpaceForm extends Component {
     }
 
     submit(){
+        if(this.state.name === ''){
+            this.setState({ errorMessage: 'El campo no puede estar vacio'})
+            return
+        }
         let ENDPOINT, url;
         if (this.props.action === 'edit'){
             ENDPOINT = endpoints.SPACE.UPDATE;
@@ -53,6 +59,7 @@ class SpaceForm extends Component {
         let {spaceData} = this.props;
         return(
             <View style={styles.container}>
+                <Text style={styles.errorMessage}>{this.state.errorMessage}</Text>
                 <TextInput
                     placeholder={spaceData ? spaceData.name : "Nombre del espacio"}
                     style={styles.textInput}
@@ -79,6 +86,10 @@ const styles = StyleSheet.create({
         height: 45,
         marginBottom: 10,
         padding: 5
+    },
+    errorMessage: {
+        color: 'white',
+        marginBottom: 20
     },
     button: {
         borderStyle: "solid",
