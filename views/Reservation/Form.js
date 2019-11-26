@@ -41,7 +41,6 @@ class ReservationForm extends Component {
             this.setState({errorText: 'La hora de fin debe ser mayor a la de inicio'})
             return
         }
-
         reservationService.create({
             ...this.state,
             date: elementData.date,
@@ -52,7 +51,7 @@ class ReservationForm extends Component {
             if (response.status == 'success'){
                 this.goToShowElement();
             }else{
-                console.warn("Hola",response.message);
+                console.warn(response.message);
             }
         })
         .catch(function (error) {

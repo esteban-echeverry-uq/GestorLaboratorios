@@ -80,7 +80,9 @@ class Index extends Component {
                             renderItem={({ item }) => <ListItem item={item} action={this.goToShowSpace} />}
                             keyExtractor={item => item._id}
                         />
-                    </View> ||
+                    </View>
+                }
+                {   spaces.length == 0 && loading == false &&
                     <Text style={[styles.container, styles.center]}>
                         No hay facultades para mostrar
                     </Text>

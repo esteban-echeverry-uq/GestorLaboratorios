@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {Text, View, StyleSheet, ScrollView, SafeAreaView} from "react-native";
 import Button from "../../components/Button";
+import moment from 'moment';
 
 const ReservationService = require('../../services/reservationService');
 const reservationService = new ReservationService();
@@ -91,34 +92,39 @@ class MyReservations extends Component {
 
 	renderReservationActions(reservation) {
 		return (
-			<View style={[styles.horizontal]}>
-				<Button
-					action={() => this.confirmReservation(reservation)}
-					bgColor='blue'
-					title='Confirmar'
-					style={styles.tableButton}
-				/>
-				<Button
-					action={() => this.deleteReservation(reservation)}
-					bgColor='red'
-					title='Cancelar'
-					style={styles.tableButton}
-				/>
-			</View>
+				reservation.status === 'pending' &&
+				<View style={[styles.horizontal]}>
+						<Button
+							action={() => this.confirmReservation(reservation)}
+							bgColor='blue'
+							title='Confirmar'
+							style={styles.tableButton}
+						/>
+						<Button
+							action={() => this.deleteReservation(reservation)}
+							bgColor='red'
+							title='Cancelar'
+							style={styles.tableButton}
+						/>
+				</View> ||
+				<View style={[styles.horizontal]}>
+						<Text style={styles.infoText}>
+							Reserva terminada
+						</Text>
+				</View> 
 		);
 	}
 
 	renderReservations(reservationList){
 		return reservationList.map(reservation => {
-			console.warn(reservation)
 			return (
 				<View key={reservation._id} style={styles.marginTop}>
-					<Text style={[styles.box, styles.headingBox]}>{reservation.element.name}</Text>
+					<Text style={[styles.box, styles.headingBox]}>{`${reservation.element.name} - ${moment(reservation.date).format('DD-MM-YYYY')}`}</Text>
 					<View style={styles.horizontal} >
 						<Text style={[styles.box]}>{`${reservation.startTime}:00`}</Text>
 						<Text style={[styles.box]}>{`${reservation.endTime+1}:00`}</Text>
 					</View>
-					{reservation.status === 'pending' && this.renderReservationActions(reservation)}
+					{this.renderReservationActions(reservation)}
 				</View>
 			)
 		})
@@ -168,6 +174,13 @@ const styles = StyleSheet.create({
 		borderRadius: 0,
 		borderWidth: 1,
 		flex: 1
+	},
+	infoText: {
+		backgroundColor: 'white',
+		textAlign: 'center',
+		borderWidth: 1,
+		flex: 1,
+		padding: 5
 	},
 	marginTop: {
 		marginTop: 30

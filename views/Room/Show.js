@@ -116,9 +116,8 @@ class Show extends Component {
     }
     
     render(){
-        const { date } = this.state;
-        const { currentUser } = this.props;
-
+        const { date } = this.state
+        const { currentUser } = this.props
         return (
             <SafeAreaView>
                 <ScrollView>
@@ -150,7 +149,9 @@ class Show extends Component {
                         />
                     </View>
                     {this.renderReservations()}
-                    <Button title='Crear Reserva' action={() => this.goToCreateReservation(date)} bgColor='green'/>
+                    { moment().format('YYYY-MM-DD') <= date && 
+                        <Button title='Crear Reserva' action={() => this.goToCreateReservation(date)} bgColor='green'/>
+                    }
                 </ScrollView>
             </SafeAreaView>
         );

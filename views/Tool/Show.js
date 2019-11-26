@@ -148,7 +148,9 @@ class Show extends Component {
                         />
                     </View>
                     {this.renderReservations()}
-                    <Button title='Crear Reserva' action={() => this.goToCreateReservation(date)} bgColor='green'/>
+                    { moment().format('YYYY-MM-DD') <= date && 
+                        <Button title='Crear Reserva' action={() => this.goToCreateReservation(date)} bgColor='green'/>
+                    }
                 </ScrollView>
             </SafeAreaView>
         );

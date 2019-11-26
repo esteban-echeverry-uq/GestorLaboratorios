@@ -110,7 +110,7 @@ module.exports = class SessionService {
 		};
 
 		const URLParams = {
-			elementID: newReservation.elementID
+			elementID: newReservation.element
 		};
 
 		try {
