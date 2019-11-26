@@ -19,7 +19,7 @@ class Tools extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.changed) {
+        if (this.props.changed !== prevProps.changed) {
             this.getTools();
         }
     }
