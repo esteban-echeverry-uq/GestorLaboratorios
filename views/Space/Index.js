@@ -75,7 +75,6 @@ class Index extends Component {
                 }
                 { spaces.length > 0 &&
                     <View>
-                        
                         <FlatList
                             data={spaces}
                             renderItem={({ item }) => <ListItem item={item} action={this.goToShowSpace} />}

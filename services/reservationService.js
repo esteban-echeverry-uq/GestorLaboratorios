@@ -3,14 +3,9 @@ const ServerAction = require('../helpers/serverAction');
 const { RESERVATION: RERVATION_ENDPOINTS } = require('../configs/constants/endpoints');
 
 module.exports = class SessionService {
-	async getAll(filters) {
-		const options = {
-			data: { ...filters }
-		};
-
+	async getAll() {
 		try {
-			const { data } = await ServerAction(RERVATION_ENDPOINTS.ADMIN_GET_ALL, {}, options);
-
+			const { data } = await ServerAction(RERVATION_ENDPOINTS.ADMIN_GET_ALL);
 			if (data.status === 'success') {
 				return {
 					status: 'success',
