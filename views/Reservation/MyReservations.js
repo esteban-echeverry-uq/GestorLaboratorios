@@ -23,24 +23,48 @@ class MyReservations extends Component {
 	setReservations() {
 		const { currentUser } = this.props;
 
-		if (currentUser) reservationService.getAllByUser(this.props.currentUser._id).then(response => {
-			if (response.status === 'success') {
-				this.setState({ reservations: response.reservations });
-				let rooms = []; 
-				let tools = [];
-				response.reservations.map((reservation) => {
-					if(reservation.elementType === 'Rooms'){
-						rooms.push(reservation)
-					}else{
-						tools.push(reservation)
-					}
-				});
-				this.setState({rooms,tools, firstTime: true})
-			}
-			else {
-				console.warn(response.message);
-			}
-		});
+		if (currentUser.role === 'admin'){
+			reservationService.getAll()
+			.then(response => {
+				if (response.status === 'success') {
+					this.setState({ reservations: response.reservations });
+					let rooms = []; 
+					let tools = [];
+					response.reservations.map((reservation) => {
+						if(reservation.elementType === 'Rooms'){
+							rooms.push(reservation)
+						}else{
+							tools.push(reservation)
+						}
+					});
+					this.setState({rooms,tools, firstTime: true})
+				}
+				else {
+					console.warn(response.message);
+				}
+			});
+		}
+		else{
+			reservationService.getAllByUser(this.props.currentUser._id)
+			.then(response => {
+				if (response.status === 'success') {
+					this.setState({ reservations: response.reservations });
+					let rooms = []; 
+					let tools = [];
+					response.reservations.map((reservation) => {
+						if(reservation.elementType === 'Rooms'){
+							rooms.push(reservation)
+						}else{
+							tools.push(reservation)
+						}
+					});
+					this.setState({rooms,tools, firstTime: true})
+				}
+				else {
+					console.warn(response.message);
+				}
+			});
+		}
 	}
 
 	confirmReservation(reservation) {
@@ -86,6 +110,7 @@ class MyReservations extends Component {
 
 	renderReservations(reservationList){
 		return reservationList.map(reservation => {
+			console.warn(reservation)
 			return (
 				<View key={reservation._id} style={styles.marginTop}>
 					<Text style={[styles.box, styles.headingBox]}>{reservation.element.name}</Text>

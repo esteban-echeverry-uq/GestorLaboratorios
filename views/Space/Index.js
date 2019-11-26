@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, View, StyleSheet, ActivityIndicator } from 'react-native';
+import { FlatList, View, StyleSheet, ActivityIndicator, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import ListItem from '../../components/ListItem';
 import Button from '../../components/Button';
@@ -12,7 +12,8 @@ class Index extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            spaces: []
+            spaces: [],
+            loading: true
         };
     }
 
@@ -35,7 +36,8 @@ class Index extends Component {
         })
             .then((response) => {
                 this.setState({
-                    spaces: response.data.spaces
+                    spaces: response.data.spaces,
+                    loading: false
                 })
             })
             .catch(function (error) {
@@ -56,27 +58,35 @@ class Index extends Component {
     };
 
     render(){
-        let {spaces} = this.state;
+        let {spaces, loading} = this.state;
         let {currentUser} = this.props;
 
         return(
-            spaces.length > 0 &&
-            <View>
+            <>
                 {currentUser.role === 'admin' && 
-                <View style={styles.horizontal}>
-                    <Button title="Crear Espacio" action={this.goToCreateSpace} bgColor='blue'/>
-                </View>
+                    <View style={styles.horizontal}>
+                        <Button title="Crear Espacio" action={this.goToCreateSpace} bgColor='blue'/>
+                    </View>
                 }
-                <FlatList
-                    data={spaces}
-                    renderItem={({ item }) => <ListItem item={item} action={this.goToShowSpace} />}
-                    keyExtractor={item => item._id}
-                />
-            </View> || 
-            <View style={[styles.container, styles.center]}>
-                <ActivityIndicator size="large" color="#176623" />
-            </View>
- 
+                { loading && 
+                    <View style={[styles.container, styles.center]}>
+                        <ActivityIndicator size="large" color="#176623" />
+                    </View>
+                }
+                { spaces.length > 0 &&
+                    <View>
+                        
+                        <FlatList
+                            data={spaces}
+                            renderItem={({ item }) => <ListItem item={item} action={this.goToShowSpace} />}
+                            keyExtractor={item => item._id}
+                        />
+                    </View> ||
+                    <Text style={[styles.container, styles.center]}>
+                        No hay facultades para mostrar
+                    </Text>
+                }
+            </>
         );
     } 
 }
