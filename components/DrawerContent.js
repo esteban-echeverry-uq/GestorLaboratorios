@@ -16,15 +16,20 @@ export default class DrawerContent extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
-		if (!this.state.currentUser && this.state.currentUser !== prevState.currentUser) this.setCurrentUser();
+		if (!this.props.currentUser && this.props.currentUser !== prevProps.currentUser) this.updateCurrentUser(undefined);
+		if (this.props.currentUser && this.props.currentUser !== prevProps.currentUser) this.updateCurrentUser(this.props.currentUser);
 	}
 
 	setCurrentUser() {
 		sessionService.getCurrentUser().then(response => {
 			if (response.status === 'success') {
-				this.setState({ currentUser: response.currentUser });
+				this.updateCurrentUser(response.currentUser);
 			}
 		});
+	}
+
+	updateCurrentUser(currentUser) {
+		this.setState({ currentUser });
 	}
 
 	goTo(component) {
@@ -51,7 +56,7 @@ export default class DrawerContent extends Component {
 	}
 
 	render() {
-		const { currentUser } = this.props;
+		const { currentUser } = this.state;
 
 		return (
 			<View>
