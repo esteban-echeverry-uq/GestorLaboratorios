@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { 
-    Button, 
     TextInput, 
     View,
     Text,
     StyleSheet,
 } from 'react-native';
+import Button from '../../components/Button';
 import axios from 'axios';
 import { Actions } from "react-native-router-flux";
 const endpoints = require('../../configs/constants/endpoints');
@@ -67,9 +67,7 @@ class ToolForm extends Component {
                     style={styles.textInput}
                     onChangeText={(text) => this.updateValue(text,'name')}
                 />
-                <View style={styles.button}>
-                    <Button title={this.props.submitText} color="white" onPress={() => this.submit()}/>
-                </View>
+                <Button title={this.props.submitText} bgColor="blue" action={() => this.submit()}/>
             </View>
         );
     } 
