@@ -25,8 +25,9 @@ class Show extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.reservationCreated !== prevProps.reservationCreated) {
+        if (this.props.reservationCreated && this.props.reservationCreated !== prevProps.reservationCreated) {
             this.getReservations(this.state.date);
+            Actions.refresh({ reservationCreated: true });
           }
         if (this.props.changed !== prevProps.changed) {
             Actions.pop({ changed: true });
