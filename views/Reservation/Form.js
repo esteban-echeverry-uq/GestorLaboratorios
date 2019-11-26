@@ -9,18 +9,35 @@ import { Dropdown } from 'react-native-material-dropdown';
 import dropDownData from './dropDown';
 import { Actions } from "react-native-router-flux";
 import moment from 'moment'
+
 const ReservationService = require('../../services/reservationService');
 const reservationService = new ReservationService();
+
+const SessionService = require('../../services/sessionService');
+const sessionService = new SessionService();
 
 class ReservationForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            currentUser: undefined,
             name: '',
             startTime: null,
             endTime: null,
             errorText: ''
         };
+    }
+
+    componentDidMount(){
+        this.setCurrentUser();
+    }
+
+    setCurrentUser() {
+        sessionService.getCurrentUser().then(response => {
+            if (response.status === 'success') {
+                this.setState({ currentUser: response.currentUser });
+            }
+        });
     }
 
     goToShowElement() {
@@ -35,8 +52,8 @@ class ReservationForm extends Component {
     }
 
     submit(){
-        const { startTime,endTime } = this.state;
-        const { currentUser, elementData, elementType } = this.props;
+        const { currentUser, startTime,endTime } = this.state;
+        const { elementData, elementType } = this.props;
 
         if(startTime > endTime){
             this.setState({errorText: 'La hora de fin debe ser mayor a la de inicio'})

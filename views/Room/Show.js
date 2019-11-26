@@ -11,10 +11,14 @@ const reservationService = new ReservationService();
 const RoomService = require('../../services/roomService');
 const roomService = new RoomService();
 
+const SessionService = require('../../services/sessionService');
+const sessionService = new SessionService();
+
 class Show extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            currentUser: undefined,
             date: moment().format('YYYY-MM-DD'),
             reservations: []
         }
@@ -22,6 +26,16 @@ class Show extends Component {
 
     componentDidMount(){
         this.getReservations(moment().format('YYYY-MM-DD'));
+        this.setCurrentUser();
+    }
+
+    setCurrentUser() {
+        sessionService.getCurrentUser().then(response => {
+            if (response.status === 'success') {
+                this.setState({ currentUser: response.currentUser });
+                Actions.refresh();
+            }
+        });
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -117,12 +131,12 @@ class Show extends Component {
     }
     
     render(){
-        const { date } = this.state
-        const { currentUser } = this.props
+        const { currentUser, date } = this.state;
+
         return (
             <SafeAreaView>
                 <ScrollView>
-                    { currentUser.role === 'admin' &&
+                    { currentUser && currentUser.role === 'admin' &&
                         <View style={[styles.horizontal, styles.container]}>
                             <Button title='Editar Sala' action={() => this.goToEditRoom(this.props.spaceData)} bgColor='blue' />
                             <Button title='Eliminar Sala' action={this.deleteRoom} bgColor='red'/>

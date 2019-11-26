@@ -9,16 +9,32 @@ import Tools from '../Tool/Index'
 const endpoints = require('../../configs/constants/endpoints');
 const endpointGenerator = require('../../helpers/endpointURLGenerator');
 
+const SessionService = require('../../services/sessionService');
+const sessionService = new SessionService();
+
 class Show extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            currentUser: undefined,
             index: 0,
             routes: [
                 { key: 'rooms', title: 'Salas' },
                 { key: 'tools', title: 'Herramientas' }
             ]
         }
+    }
+
+    componentDidMount(){
+        this.setCurrentUser();
+    }
+
+    setCurrentUser() {
+        sessionService.getCurrentUser().then(response => {
+            if (response.status === 'success') {
+                this.setState({ currentUser: response.currentUser });
+            }
+        });
     }
 
     goToEditSpace = (spaceData) => {
@@ -64,11 +80,12 @@ class Show extends Component {
     };
 
     render(){
-        const { spaceData, currentUser, changed } = this.props;
+        const { spaceData, changed } = this.props;
+        const { currentUser } = this.state;
 
         return (
             <Fragment>
-                { currentUser.role === 'admin' && 
+                { currentUser && currentUser.role === 'admin' &&
                     <>
                     <View style={styles.horizontal}>
                         <Button title="Editar Espacio" action={() => this.goToEditSpace(spaceData)} bgColor='blue' />
@@ -85,9 +102,9 @@ class Show extends Component {
                     renderScene ={ ({ route }) => {
                         switch (route.key) {
                             case 'rooms':
-                                return <Rooms changed={changed} spaceData={spaceData} currentUser={currentUser} />;
+                                return <Rooms changed={changed} spaceData={spaceData} />;
                             case 'tools':
-                                return <Tools  changed={changed} spaceData={spaceData} currentUser={currentUser} />;
+                                return <Tools  changed={changed} spaceData={spaceData} />;
                             default:
                                 return null;
                         }

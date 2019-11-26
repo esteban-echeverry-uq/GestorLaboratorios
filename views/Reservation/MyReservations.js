@@ -2,14 +2,19 @@ import React, {Component} from "react";
 import {Text, View, StyleSheet, ScrollView, SafeAreaView} from "react-native";
 import Button from "../../components/Button";
 import moment from 'moment';
+import {Actions} from "react-native-router-flux";
 
 const ReservationService = require('../../services/reservationService');
 const reservationService = new ReservationService();
+
+const SessionService = require('../../services/sessionService');
+const sessionService = new SessionService();
 
 class MyReservations extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			currentUser: undefined,
 			reservations: [],
 			rooms: [],
 			tools: [],
@@ -19,11 +24,19 @@ class MyReservations extends Component {
 	}
 
 	componentDidMount() {
-		this.setReservations();
+		this.setCurrentUser();
+	}
+
+	setCurrentUser() {
+		sessionService.getCurrentUser().then(response => {
+			if (response.status === 'success') {
+				this.setState({ currentUser: response.currentUser }, this.setReservations);
+			}
+		});
 	}
 
 	setReservations() {
-		const { currentUser } = this.props;
+		const { currentUser } = this.state;
 
 		if (currentUser.role === 'admin'){
 			reservationService.getAll()
@@ -47,7 +60,7 @@ class MyReservations extends Component {
 			});
 		}
 		else{
-			reservationService.getAllByUser(this.props.currentUser._id)
+			reservationService.getAllByUser(currentUser._id)
 			.then(response => {
 				if (response.status === 'success') {
 					this.setState({ reservations: response.reservations });

@@ -80,21 +80,21 @@ export default class Routes extends Component {
 						setCurrentUser={(currentUser) => this.setCurrentUser(currentUser)}
 					/>
 
-                    <Scene key='spacesIndex' component={Spaces} title='Facultades' initial={currentUser} currentUser={currentUser} type="reset"/>
-                    <Scene key='showSpace' component={ShowSpace} title currentUser={currentUser}/>
+                    <Scene key='spacesIndex' component={Spaces} title='Facultades' initial={currentUser} type="reset" />
+                    <Scene key='showSpace' component={ShowSpace} title />
                     <Scene key='createSpace' component={SpaceForm} title='Crear Espacio' />
                     <Scene key='editSpace' component={SpaceForm} title='Editar Espacio' />
 
                     <Scene key='createRoom' component={RoomForm} title='Crear Sala' />
-                    <Scene key='showRoom' component={ShowRoom} title currentUser={currentUser} />
+                    <Scene key='showRoom' component={ShowRoom} title  />
                     <Scene key='editRoom' component={RoomForm} title='Editar Sala' />
 
                     <Scene key='createTool' component={ToolForm} title='Crear Herramienta' />
-                    <Scene key='showTool' component={ShowTool} title currentUser={currentUser}/>
+                    <Scene key='showTool' component={ShowTool} title />
                     <Scene key='editTool' component={ToolForm} title='Editar Herramienta' />
 
-                    <Scene key='createReservation' component={ReservationForm} title='Crear Reserva' currentUser={currentUser} />
-					<Scene key='myReservations' component={MyReservations} title='Mis Reservas' currentUser={currentUser} />
+                    <Scene key='createReservation' component={ReservationForm} title='Crear Reserva' />
+					<Scene key='myReservations' component={MyReservations} title='Mis Reservas' />
                 </Scene>
             </Router>
         )

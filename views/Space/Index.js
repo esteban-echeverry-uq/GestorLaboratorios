@@ -7,11 +7,15 @@ import axios from 'axios';
 const endpoints = require('../../configs/constants/endpoints');
 const endpointGenerator = require('../../helpers/endpointURLGenerator');
 
+const SessionService = require('../../services/sessionService');
+const sessionService = new SessionService();
+
 class Index extends Component {
     
     constructor(props) {
         super(props);
         this.state = {
+            currentUser: undefined,
             spaces: [],
             loading: true
         };
@@ -19,12 +23,21 @@ class Index extends Component {
 
     componentDidMount(){
        this.getSpaces();
+       this.setCurrentUser();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.changed !== prevProps.changed) {
             this.getSpaces();
         }
+    }
+
+    setCurrentUser() {
+        sessionService.getCurrentUser().then(response => {
+            if (response.status === 'success') {
+                this.setState({ currentUser: response.currentUser });
+            }
+        });
     }
 
     getSpaces = () => {
@@ -49,7 +62,6 @@ class Index extends Component {
         Actions.showSpace({
             spaceData,
             title: spaceData.name,
-            currentUser: this.props.currentUser
         })
     };
 
@@ -58,12 +70,11 @@ class Index extends Component {
     };
 
     render(){
-        let {spaces, loading} = this.state;
-        let {currentUser} = this.props;
+        const { currentUser, spaces, loading } = this.state;
 
         return(
             <>
-                {currentUser.role === 'admin' && 
+                { currentUser && currentUser.role === 'admin' &&
                     <View style={styles.horizontal}>
                         <Button title="Crear Espacio" action={this.goToCreateSpace} bgColor='blue'/>
                     </View>

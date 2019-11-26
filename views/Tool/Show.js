@@ -11,26 +11,42 @@ const reservationService = new ReservationService();
 const ToolService = require('../../services/toolService');
 const toolService = new ToolService();
 
+const SessionService = require('../../services/sessionService');
+const sessionService = new SessionService();
+
 class Show extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            currentUser: undefined,
             date: moment().format('YYYY-MM-DD'),
             reservations: []
         }
     }
 
     componentDidMount(){
+        this.setCurrentUser();
         this.getReservations(moment().format('YYYY-MM-DD'));
+    }
+
+    setCurrentUser() {
+        sessionService.getCurrentUser().then(response => {
+            if (response.status === 'success') {
+                Actions.refresh({ currentUser: response.currentUser });
+            }
+        });
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.reservationCreated && this.props.reservationCreated !== prevProps.reservationCreated) {
             this.getReservations(this.state.date);
             Actions.refresh({ reservationCreated: true });
-          }
+        }
         if (this.props.changed !== prevProps.changed) {
             Actions.pop({ changed: true });
+        }
+        if (!this.props.currentUser) {
+            this.setCurrentUser();
         }
     }
 
@@ -115,13 +131,13 @@ class Show extends Component {
     }
 
     render(){
-        let { date } = this.state
-        let { currentUser } = this.props;
+        const { date } = this.state;
+        const { currentUser } = this.props;
 
         return (
             <SafeAreaView>
                 <ScrollView>
-                    { currentUser.role === 'admin' &&
+                    { currentUser && currentUser.role === 'admin' &&
                         <View style={[styles.horizontal, styles.container]}>
                                 <Button title="Editar Herramienta" action={() => this.goToEditTool(this.props.spaceData)} bgColor='blue' />
                                 <Button title="Eliminar Herramienta" action={this.deleteTool} bgColor='red'/>

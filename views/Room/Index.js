@@ -45,8 +45,7 @@ class Rooms extends Component {
         Actions.showRoom({
             roomData,
             spaceData: this.props.spaceData,
-            title: roomData.name,
-            currentUser: this.props.currentUser
+            title: roomData.name
         });
     };
     

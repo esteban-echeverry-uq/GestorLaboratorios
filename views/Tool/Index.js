@@ -45,8 +45,7 @@ class Tools extends Component {
         Actions.showTool({
             toolData,
             spaceData: this.props.spaceData,
-            title: toolData.name,
-            currentUser: this.props.currentUser
+            title: toolData.name
         });
     };
     
