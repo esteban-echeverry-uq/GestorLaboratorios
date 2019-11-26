@@ -13,7 +13,8 @@ class MyReservations extends Component {
 			reservations: [],
 			rooms: [],
 			tools: [],
-			firstTime: false
+			firstTime: false,
+			timeText: null
 		};
 	}
 
@@ -74,7 +75,7 @@ class MyReservations extends Component {
 				this.setReservations();
 			}
 			else {
-				console.warn(response.message);
+				this.setState({timeText: response.message});
 			}
 		});
 	}
@@ -131,11 +132,12 @@ class MyReservations extends Component {
 	}
 	
 	render() {
-		const { rooms, tools } = this.state;
+		const { rooms, tools, timeText } = this.state;
 
 		return (
 			<SafeAreaView style={styles.container}>
 				<ScrollView style={styles.container}>
+					{ timeText && <Text style={styles.timeText}>{timeText}</Text>}
 					<Text style={styles.title}>Reservas de Salas</Text>
 					{this.renderReservations(rooms)}
 					<Text style={[styles.title, styles.marginTop]}>Reservas de Herramientas</Text>
@@ -181,6 +183,15 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		flex: 1,
 		padding: 5
+	},
+	timeText: {
+		color: 'white',
+		backgroundColor: '#e6b800',
+		borderWidth: 2,
+		borderColor: 'white',
+		borderRadius: 5,
+		padding: 5,
+		marginBottom: 10
 	},
 	marginTop: {
 		marginTop: 30
