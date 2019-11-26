@@ -115,9 +115,7 @@ class ReservationForm extends Component {
                         })
                     }}
                 />
-                <View style={styles.button}>
-                    <Button title={this.props.submitText} bgColor="white" action={() => this.submit()}/>
-                </View>
+                <Button title={this.props.submitText} bgColor="white" action={() => this.submit()}/>
             </View>
         );
     } 
