@@ -1,21 +1,27 @@
 import React, {Component} from "react";
-import { Button, StyleSheet } from "react-native";
+import { Button, StyleSheet, View } from "react-native";
 import {Actions} from "react-native-router-flux";
 
 export default class MenuButton extends Component {
 	openDrawer() {
-		Actions.menuDrawer();
+		Actions.menuDrawer({opened: true});
 	}
 
 	render() {
 		return (
-			<Button style={styles.container} onPress={this.openDrawer} title='menú' />
+			<View style={styles.container}>
+				<Button style={styles.button} onPress={this.openDrawer} title='menú' />
+			</View>
 		);
 	}
 }
 
 const styles = StyleSheet.create({
-    container: {
+	container: {
+		marginRight: 20
+	},	
+    button: {
 		fontSize: 5,
+		marginRight: 10
 	}
 });

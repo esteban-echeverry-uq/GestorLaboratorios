@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { 
-    Button, 
+import {
     View, 
     StyleSheet,
     Text
 } from 'react-native';
+import Button from '../../components/Button';
 import { Dropdown } from 'react-native-material-dropdown';
 import dropDownData from './dropDown';
 import { Actions } from "react-native-router-flux";
@@ -116,7 +116,7 @@ class ReservationForm extends Component {
                     }}
                 />
                 <View style={styles.button}>
-                    <Button title={this.props.submitText} color="white" onPress={() => this.submit()}/>
+                    <Button title={this.props.submitText} bgColor="white" action={() => this.submit()}/>
                 </View>
             </View>
         );
