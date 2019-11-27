@@ -143,8 +143,9 @@ class Show extends Component {
                         </View>
                     }
                     <View style={{display: 'flex', alignItems: 'center'}}>
+                        <Text style={styles.calendarHeader}>Fecha</Text>
                         <DatePicker
-                            style={{width: 200, margin: 20}}
+                            style={{width: 200, marginBottom: 20}}
                             date={this.state.date}
                             mode='date'
                             placeholder='Seleccionar Fecha'
@@ -156,13 +157,16 @@ class Show extends Component {
                                 display: 'none'
                             },
                             dateInput: {
-                                borderColor: '#176623',
+                                borderColor: 'black',
                                 backgroundColor: 'white'
                             }
                             }}
                             onDateChange={(date) => {this.getReservations(date)}}
                         />
                     </View>
+                    { moment().format('YYYY-MM-DD') <= date && 
+                        <Button title='Crear Reserva' action={() => this.goToCreateReservation(date)} bgColor='green'/>
+                    }
                     {this.renderReservations()}
                     { moment().format('YYYY-MM-DD') <= date && 
                         <Button title='Crear Reserva' action={() => this.goToCreateReservation(date)} bgColor='green'/>
@@ -202,8 +206,17 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: 'white'
     },
+    calendarHeader: {
+        width: 200,
+        backgroundColor: '#cc0000',
+        color: 'white',
+        borderWidth: 1,
+        borderColor: 'black',
+        textAlign: 'center',
+        padding: 5
+    },
     available:{
-        backgroundColor: '#176623'
+        backgroundColor: '#13531d'
     },
     pending: {
         backgroundColor: '#e6b800'
