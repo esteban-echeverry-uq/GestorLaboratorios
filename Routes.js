@@ -13,7 +13,7 @@ import ReservationForm from './views/Reservation/Form';
 import DrawerContent from "./components/DrawerContent";
 import MenuButton from "./components/MenuButton";
 import MyReservations from "./views/Reservation/MyReservations";
-console.disableYellowBox = false;
+console.disableYellowBox = true;
 const SessionService = require('./services/sessionService');
 const sessionService = new SessionService();
 
@@ -57,7 +57,7 @@ export default class Routes extends Component {
             <Router>
                 <Scene
 					key='root'
-					renderRightButton={<MenuButton />}
+					renderRightButton={currentUser && <MenuButton />}
 				>
 					<Drawer
 						key='menuDrawer'
